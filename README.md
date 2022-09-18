@@ -15,7 +15,7 @@ Registruotas sistemos naudotojas (kurjeris) galės:
 1. Matyti priskirto automobilio informaciją;
 2. Matyti savo pristatomų siuntų sąrašą;
 3. Matyti detalią pristatomos siuntos informaciją;
-4. Atnaujinti siuntos statusą;
+4. Atnaujinti siuntos statusą.
 
 Administratorius galės:
 1. Valdyti kurjerius (CRUD);

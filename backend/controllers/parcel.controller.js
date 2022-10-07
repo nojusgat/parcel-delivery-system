@@ -94,7 +94,7 @@ exports.findOne = (req, res) => {
 exports.update = async (req, res) => {
     const id = req.params.id;
 
-    const parcelExists = await Parcels.count({ where: { id } }) > 0;
+    const parcelExists = await Parcels.count({ where: { parcelNumber: id } }) > 0;
     if (!parcelExists) {
         res.status(404).send({
             message: `Parcel with id ${id} was not found.`
@@ -102,9 +102,9 @@ exports.update = async (req, res) => {
         return;
     }
 
-    if ("id" in req.body) {
+    if ("parcelNumber" in req.body) {
         res.status(400).send({
-            message: "Id cannot be changed."
+            message: "Parcel number cannot be changed."
         });
         return;
     }
@@ -120,7 +120,7 @@ exports.update = async (req, res) => {
     }
 
     Parcels.update(req.body, {
-        where: { id },
+        where: { parcelNumber: id },
     })
         .then(num => {
             if (num == 1) {
@@ -159,7 +159,7 @@ exports.delete = (req, res) => {
     const id = req.params.id;
 
     Parcels.destroy({
-        where: { id }
+        where: { parcelNumber: id }
     })
         .then(num => {
             if (num == 1) {

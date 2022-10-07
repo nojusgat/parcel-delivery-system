@@ -1,5 +1,16 @@
+const { v4: uuidv4 } = require('uuid');
+
 module.exports = (sequelize, Sequelize) => {
     const Parcel = sequelize.define("parcel", {
+        parcelNumber: {
+            type: Sequelize.STRING,
+            allowNull: false,
+            unique: true,
+            primaryKey: true,
+            defaultValue: function() {
+                return "LT" + uuidv4().toString().replace(/-/gi, '').toUpperCase().slice(0, 13);
+            }
+        },
         senderName: {
             type: Sequelize.STRING,
             allowNull: false,

@@ -24,21 +24,27 @@ db.couriers = require("./courier.model.js")(sequelize, Sequelize);
 db.cars = require("./car.model.js")(sequelize, Sequelize);
 db.users = require("./user.model.js")(sequelize, Sequelize);
 
-db.couriers.hasMany(db.parcels, { as: "parcels" });
+db.couriers.hasMany(db.parcels, { as: "parcel" });
 db.parcels.belongsTo(db.couriers, {
     foreignKey: "courierId",
     as: "courier",
 });
 
-db.cars.hasOne(db.couriers, { as: "cars" });
+db.cars.hasOne(db.couriers, { as: "car" });
 db.couriers.belongsTo(db.cars, {
-    foreignKey: "carId",
+    foreignKey: {
+        name: "carId",
+        unique: true
+    },
     as: "car",
 });
 
-db.users.hasOne(db.couriers, { as: "users" });
+db.users.hasOne(db.couriers, { as: "user" });
 db.couriers.belongsTo(db.users, {
-    foreignKey: "userId",
+    foreignKey: {
+        name: "userId",
+        unique: true
+    },
     as: "user",
 });
 

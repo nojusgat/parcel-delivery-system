@@ -1,3 +1,5 @@
+const bcrypt = require("bcrypt");
+
 module.exports = (sequelize, Sequelize) => {
     const User = sequelize.define("user", {
         username: {
@@ -44,7 +46,26 @@ module.exports = (sequelize, Sequelize) => {
             type: Sequelize.ENUM('User', 'Admin'),
             defaultValue: 'User'
         }
+    }, {
+        defaultScope: {
+            attributes: { exclude: ['password'] },
+        },
+        scopes: {
+            withPassword: {
+                attributes: {},
+            }
+        },
+        hooks: {
+            beforeCreate: (user) => {
+                const salt = bcrypt.genSaltSync();
+                user.password = bcrypt.hashSync(user.password, salt);
+            }
+        }
     });
+
+    User.prototype.validPassword = function (password) {
+        return bcrypt.compareSync(password, this.password);
+    };
 
     return User;
 };

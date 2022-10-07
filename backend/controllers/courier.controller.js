@@ -1,9 +1,20 @@
 const { getPagination, getPagingData } = require('./shared');
 const db = require("../models");
 const Couriers = db.couriers;
+const Cars = db.cars;
+const Users = db.users;
 
 exports.create = (req, res) => {
-    Couriers.create(req.body)
+    const courier = {
+        firstname: req.body.firstname,
+        lastname: req.body.lastname,
+        phone: req.body.phone,
+        status: req.body.status,
+        carId: req.body.carId,
+        userId: req.body.userId
+    };
+
+    Couriers.create(courier)
         .then(data => {
             res.status(201).send(data);
         })
@@ -16,15 +27,28 @@ exports.create = (req, res) => {
 
 exports.findAll = (req, res) => {
     const { page, size } = req.query;
+    if (page != null && isNaN(page) || size != null && isNaN(size)) {
+        res.status(400).send({
+            message: "Page and size must be numbers."
+        });
+        return;
+    }
+
     const { limit, offset } = getPagination(page, size);
 
-    Couriers.findAndCountAll({ limit, offset, include: ["car", "user"], attributes: { exclude: ['carId', 'userId'] } })
+    Couriers.findAndCountAll({ limit, offset })
         .then(data => {
             const response = getPagingData(data, page, limit);
-            res.send(response);
+            if (response.page > response.total_pages) {
+                res.status(404).send({
+                    message: `Page ${page} was not found.`
+                });
+            } else {
+                res.send(response);
+            }
         })
         .catch(err => {
-            res.status(400).send({
+            res.status(500).send({
                 message: err.message || "Some error occurred while retrieving couriers."
             });
         });
@@ -44,17 +68,52 @@ exports.findOne = (req, res) => {
             }
         })
         .catch(err => {
-            res.status(400).send({
+            res.status(500).send({
                 message: err.message || "Some error occurred while retrieving the Courier."
             });
         });
 };
 
-exports.update = (req, res) => {
+exports.update = async (req, res) => {
     const id = req.params.id;
 
+    const courierExists = await Couriers.count({ where: { id } }) > 0;
+    if (!courierExists) {
+        res.status(404).send({
+            message: `Courier with id ${id} was not found.`
+        });
+        return;
+    }
+
+    if ("id" in req.body) {
+        res.status(400).send({
+            message: "Id cannot be changed."
+        });
+        return;
+    }
+
+    if ("carId" in req.body) {
+        const carExists = await Cars.count({ where: { id: req.body.carId } }) > 0;
+        if (!carExists) {
+            res.status(400).send({
+                message: `Car with id ${req.body.carId} was not found.`
+            });
+            return;
+        }
+    }
+
+    if ("userId" in req.body) {
+        const userExists = await Users.count({ where: { id: req.body.userId } }) > 0;
+        if (!userExists) {
+            res.status(400).send({
+                message: `User with id ${req.body.userId} was not found.`
+            });
+            return;
+        }
+    }
+
     Couriers.update(req.body, {
-        where: { id }
+        where: { id },
     })
         .then(num => {
             if (num == 1) {
@@ -63,8 +122,8 @@ exports.update = (req, res) => {
                         res.send(data);
                     });
             } else {
-                res.status(404).send({
-                    message: `Courier with id ${id} was not found.`
+                res.status(400).send({
+                    message: `Failed to update Courier with id ${id}.`
                 });
             }
         })
@@ -91,7 +150,7 @@ exports.delete = (req, res) => {
             }
         })
         .catch(err => {
-            res.status(400).send({
+            res.status(500).send({
                 message: err.message || "Some error occurred while deleting the Courier."
             });
         });

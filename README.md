@@ -29,4 +29,4 @@ Sistemos sudedamosios dalys:
 - Kliento pusė (ang. Front-End) – naudojant React.js;
 - Serverio pusė (angl. Back-End) – naudojant Node.js Express. Duomenų bazė – MySQL.
 
-![](/deployment-diagram-.png)
+![](/deployment-diagram.png)

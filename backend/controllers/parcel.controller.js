@@ -57,6 +57,51 @@ exports.findAll = (req, res) => {
         });
 };
 
+exports.findAllByCars = (req, res) => {
+    const id = req.params.id;
+    const { page, size } = req.query;
+    if (page != null && isNaN(page) || size != null && isNaN(size)) {
+        res.status(400).send({
+            message: "Page and size must be numbers."
+        });
+        return;
+    }
+
+    const { limit, offset } = getPagination(page, size);
+    Parcels.findAndCountAll({
+        limit, offset,
+        include: [
+            {
+                model: Couriers,
+                as: "courier",
+                where: { carId: id },
+                attributes: []
+            }
+        ]
+    })
+        .then(data => {
+            if (data.count == 0) {
+                res.status(404).send({
+                    message: `Parcels with car id ${id} were not found.`
+                });
+            } else {
+                const response = getPagingData(data, page, limit);
+                if (response.page > response.total_pages) {
+                    res.status(404).send({
+                        message: `Page ${page} was not found.`
+                    });
+                } else {
+                    res.send(response);
+                }
+            }
+        })
+        .catch(err => {
+            res.status(500).send({
+                message: err.message || "Some error occurred while retrieving parcels."
+            });
+        });
+};
+
 exports.findOne = (req, res) => {
     const id = req.params.id;
 

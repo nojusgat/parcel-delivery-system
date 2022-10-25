@@ -23,11 +23,17 @@ db.sequelize.sync()
     console.log("Failed to sync db: " + err.message);
   });
 
+app.get("/", (req, res) => {
+  res.json({ message: "Welcome to the application." });
+});
+
 require("./routes/parcel.routes")(app);
 require("./routes/courier.routes")(app);
 require("./routes/car.routes")(app);
 require("./routes/user.routes")(app);
 
-app.listen(process.env.port, () => {
+
+const port = process.env.PORT || 8080;
+app.listen(port, () => {
   console.log(`Backend server is running on port ${process.env.port}.`);
 });

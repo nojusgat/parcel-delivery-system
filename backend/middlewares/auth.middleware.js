@@ -1,4 +1,6 @@
 const jwt = require('jsonwebtoken');
+const db = require("../models");
+const Users = db.users;
 
 exports.generateToken = (user) => {
     return jwt.sign({
@@ -10,15 +12,20 @@ exports.generateToken = (user) => {
     });
 };
 
-exports.authorization = (req, res, next) => {
+exports.authorization = async (req, res, next) => {
     try {
         const token = req.headers.authorization.split(" ")[1];
         const decoded = jwt.verify(token, process.env.jwt_secret);
 
-        req.user = decoded;
+        const user = await Users.findByPk(decoded.id);
+        if (!user)
+            throw new Error();
 
+        req.user = user;
         next();
     } catch (error) {
-        return res.status(401).json({ message: 'Auth failed' });
+        return res.status(401).json({
+            message: "Authorization failed."
+        });
     }
 };

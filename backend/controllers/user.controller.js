@@ -1,5 +1,7 @@
 const db = require("../models");
+const auth = require("../middlewares/auth.middleware");
 const Users = db.users;
+const Couriers = db.couriers;
 
 exports.register = (req, res) => {
     const user = {
@@ -9,9 +11,10 @@ exports.register = (req, res) => {
     };
 
     Users.create(user)
-        .then(data => {
-            data.dataValues.password = undefined;
-            res.send(data);
+        .then(user => {
+            user.dataValues.password = undefined;
+            const token = auth.generateToken(user);
+            res.status(201).send({ user, token });
         })
         .catch(err => {
             res.status(400).send({
@@ -31,7 +34,8 @@ exports.login = (req, res) => {
             } else {
                 if (user.validPassword(password)) {
                     user.dataValues.password = undefined;
-                    res.send(user);
+                    const token = auth.generateToken(user);
+                    res.status(201).send({ user, token });
                 } else {
                     res.status(400).send({
                         message: "Failed to login."
@@ -47,16 +51,15 @@ exports.login = (req, res) => {
 };
 
 exports.profile = (req, res) => {
-    const id = req.query.test_id;
-
-    Users.findByPk(id)
-        .then(data => {
+    Users.findByPk(req.user.id)
+        .then(async data => {
             if (data == null) {
                 res.status(404).send({
                     message: `User with id ${id} was not found.`
                 });
             } else {
-                res.send(data);
+                const courier = await Couriers.findOne({ where: { userId: req.user.id } });
+                res.send({...data.dataValues, courier });
             }
         })
         .catch(err => {

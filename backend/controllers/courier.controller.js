@@ -5,6 +5,12 @@ const Cars = db.cars;
 const Users = db.users;
 
 exports.create = (req, res) => {
+    if (req.user.role != "Admin") {
+        res.status(403).send({
+            message: "Only Admin can create couriers."
+        });
+        return;
+    }
     const courier = {
         firstname: req.body.firstname,
         lastname: req.body.lastname,
@@ -26,6 +32,12 @@ exports.create = (req, res) => {
 };
 
 exports.findAll = (req, res) => {
+    if (req.user.role != "Admin") {
+        res.status(403).send({
+            message: "Only Admin can view all couriers."
+        });
+        return;
+    }
     const { page, size } = req.query;
     if (page != null && isNaN(page) || size != null && isNaN(size)) {
         res.status(400).send({
@@ -55,6 +67,12 @@ exports.findAll = (req, res) => {
 };
 
 exports.findOne = (req, res) => {
+    if (req.user.role != "Admin") {
+        res.status(403).send({
+            message: "Only Admin can view couriers."
+        });
+        return;
+    }
     const id = req.params.id;
 
     Couriers.findByPk(id, { include: ["car", "user"], attributes: { exclude: ['carId', 'userId'] } })
@@ -75,6 +93,12 @@ exports.findOne = (req, res) => {
 };
 
 exports.update = async (req, res) => {
+    if (req.user.role != "Admin") {
+        res.status(403).send({
+            message: "Only Admin can update couriers."
+        });
+        return;
+    }
     const id = req.params.id;
 
     const courierExists = await Couriers.count({ where: { id } }) > 0;
@@ -135,6 +159,12 @@ exports.update = async (req, res) => {
 };
 
 exports.delete = (req, res) => {
+    if (req.user.role != "Admin") {
+        res.status(403).send({
+            message: "Only Admin can delete couriers."
+        });
+        return;
+    }
     const id = req.params.id;
 
     Couriers.destroy({

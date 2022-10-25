@@ -1,8 +1,15 @@
 const { getPagination, getPagingData } = require('./shared');
 const db = require("../models");
 const Cars = db.cars;
+const Couriers = db.couriers;
 
 exports.create = (req, res) => {
+    if (req.user.role != "Admin") {
+        res.status(403).send({
+            message: "Only Admin can create cars."
+        });
+        return;
+    }
     const car = {
         make: req.body.make,
         model: req.body.model,
@@ -21,6 +28,12 @@ exports.create = (req, res) => {
 };
 
 exports.findAll = (req, res) => {
+    if (req.user.role != "Admin") {
+        res.status(403).send({
+            message: "Only Admin can view all cars."
+        });
+        return;
+    }
     const { page, size } = req.query;
     if (page != null && isNaN(page) || size != null && isNaN(size)) {
         res.status(400).send({
@@ -49,8 +62,16 @@ exports.findAll = (req, res) => {
         });
 };
 
-exports.findOne = (req, res) => {
+exports.findOne = async (req, res) => {
     const id = req.params.id;
+
+    const courier = await Couriers.findOne({ where: { userId: req.user.id } });
+    if (req.user.role != "Admin" && ((!courier || !courier.carId) || (courier && id != courier.carId))) {
+        res.status(403).send({
+            message: "Only Admin can view cars."
+        });
+        return;
+    }
 
     Cars.findByPk(id)
         .then(data => {
@@ -70,6 +91,12 @@ exports.findOne = (req, res) => {
 };
 
 exports.update = async (req, res) => {
+    if (req.user.role != "Admin") {
+        res.status(403).send({
+            message: "Only Admin can update cars."
+        });
+        return;
+    }
     const id = req.params.id;
 
     const carExists = await Cars.count({ where: { id } }) > 0;
@@ -110,6 +137,12 @@ exports.update = async (req, res) => {
 };
 
 exports.delete = (req, res) => {
+    if (req.user.role != "Admin") {
+        res.status(403).send({
+            message: "Only Admin can delete cars."
+        });
+        return;
+    }
     const id = req.params.id;
 
     Cars.destroy({

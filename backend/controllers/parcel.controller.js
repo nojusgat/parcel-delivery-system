@@ -1,9 +1,17 @@
 const { getPagination, getPagingData } = require('./shared');
 const db = require("../models");
+const userModel = require('../models/user.model');
 const Parcels = db.parcels;
 const Couriers = db.couriers;
 
 exports.create = (req, res) => {
+    if (req.user.role != 'Admin') {
+        res.status(403).send({
+            message: "Only Admin can create parcels."
+        });
+        return;
+    }
+
     const parcel = {
         senderName: req.body.senderName,
         senderAddress: req.body.senderAddress,
@@ -28,7 +36,7 @@ exports.create = (req, res) => {
         });
 };
 
-exports.findAll = (req, res) => {
+exports.findAll = async (req, res) => {
     const { page, size } = req.query;
     if (page != null && isNaN(page) || size != null && isNaN(size)) {
         res.status(400).send({
@@ -39,15 +47,36 @@ exports.findAll = (req, res) => {
 
     const { limit, offset } = getPagination(page, size);
 
-    Parcels.findAndCountAll({ limit, offset })
+    let where = {};
+    const courier = await Couriers.findOne({
+        where: { userId: req.user.id },
+        attributes: ['id']
+    });
+
+    if (courier != null) {
+        where.courierId = courier.id;
+    } else if (req.user.role != 'Admin') {
+        res.status(403).send({
+            message: "Only Admin can view all parcels."
+        });
+        return;
+    }
+
+    Parcels.findAndCountAll({ limit, offset, where })
         .then(data => {
-            const response = getPagingData(data, page, limit);
-            if (response.page > response.total_pages) {
+            if (data.count == 0) {
                 res.status(404).send({
-                    message: `Page ${page} was not found.`
+                    message: "Parcels were not found."
                 });
             } else {
-                res.send(response);
+                const response = getPagingData(data, page, limit);
+                if (response.page > response.total_pages) {
+                    res.status(404).send({
+                        message: `Page ${page} was not found.`
+                    });
+                } else {
+                    res.send(response);
+                }
             }
         })
         .catch(err => {
@@ -102,7 +131,7 @@ exports.findAllByCars = (req, res) => {
         });
 };
 
-exports.findOne = (req, res) => {
+exports.findOne = async (req, res) => {
     const id = req.params.id;
 
     Parcels.findByPk(id, {
@@ -139,10 +168,32 @@ exports.findOne = (req, res) => {
 exports.update = async (req, res) => {
     const id = req.params.id;
 
-    const parcelExists = await Parcels.count({ where: { parcelNumber: id } }) > 0;
+    let where = {};
+    const courier = await Couriers.findOne({
+        where: { userId: req.user.id },
+        attributes: ['id']
+    });
+
+    if (courier != null) {
+        where.courierId = courier.id;
+    } else if (req.user.role != 'Admin') {
+        res.status(403).send({
+            message: "Only Admin can update parcel."
+        });
+        return;
+    }
+
+    const parcelExists = await Parcels.count({ where: { parcelNumber: id, ...where } }) > 0;
     if (!parcelExists) {
         res.status(404).send({
             message: `Parcel with id ${id} was not found.`
+        });
+        return;
+    }
+
+    if(req.user.role != 'Admin' && where.hasOwnProperty('courierId') && (!req.body.hasOwnProperty('status') || (req.body.hasOwnProperty('status') && Object.keys(req.body).length > 1))) {
+        res.status(400).send({
+            message: "Only status can be updated."
         });
         return;
     }
@@ -165,7 +216,7 @@ exports.update = async (req, res) => {
     }
 
     Parcels.update(req.body, {
-        where: { parcelNumber: id },
+        where: { parcelNumber: id, ...where },
     })
         .then(num => {
             if (num == 1) {
@@ -201,6 +252,12 @@ exports.update = async (req, res) => {
 };
 
 exports.delete = (req, res) => {
+    if (req.user.role != 'Admin') {
+        res.status(403).send({
+            message: "Only Admin can delete parcels."
+        });
+        return;
+    }
     const id = req.params.id;
 
     Parcels.destroy({

@@ -50,6 +50,26 @@ exports.login = (req, res) => {
         });
 };
 
+exports.logout = (req, res) => {
+    Users.findByPk(req.user.id)
+        .then(async data => {
+            if (data == null) {
+                res.status(404).send({
+                    message: `User with id ${id} was not found.`
+                });
+            } else {
+                data.token = null;
+                await data.save();
+                res.send({ message: "Logout successful." });
+            }
+        })
+        .catch(err => {
+            res.status(500).send({
+                message: err.message || "Some error occurred while retrieving users."
+            });
+        });
+};
+
 exports.profile = (req, res) => {
     Users.findByPk(req.user.id)
         .then(async data => {

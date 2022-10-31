@@ -3,13 +3,23 @@ const db = require("../models");
 const Users = db.users;
 
 exports.generateToken = (user) => {
-    return jwt.sign({
+    let token = jwt.sign({
         id: user.id,
         email: user.email,
         role: user.role
     }, process.env.jwt_secret, {
         expiresIn: process.env.jwt_expiration
     });
+
+    Users.update({
+        token: token
+    }, {
+        where: {
+            id: user.id
+        }
+    });
+
+    return token;
 };
 
 exports.authorization = async (req, res, next) => {
@@ -18,7 +28,7 @@ exports.authorization = async (req, res, next) => {
         const decoded = jwt.verify(token, process.env.jwt_secret);
 
         const user = await Users.findByPk(decoded.id);
-        if (!user)
+        if (!user || user.token != token)
             throw new Error();
 
         req.user = user;

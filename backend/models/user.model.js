@@ -45,6 +45,11 @@ module.exports = (sequelize, Sequelize) => {
         role: {
             type: Sequelize.ENUM('User', 'Admin'),
             defaultValue: 'User'
+        },
+        token: {
+            type: Sequelize.STRING,
+            allowNull: true,
+            default: null
         }
     }, {
         defaultScope: {

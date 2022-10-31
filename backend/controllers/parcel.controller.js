@@ -7,7 +7,7 @@ const Couriers = db.couriers;
 exports.create = (req, res) => {
     if (req.user.role != 'Admin') {
         res.status(403).send({
-            message: "Only Admin can create parcels."
+            message: "Page access is restricted."
         });
         return;
     }
@@ -57,7 +57,7 @@ exports.findAll = async (req, res) => {
         where.courierId = courier.id;
     } else if (req.user.role != 'Admin') {
         res.status(403).send({
-            message: "Only Admin can view all parcels."
+            message: "Page access is restricted."
         });
         return;
     }
@@ -65,13 +65,13 @@ exports.findAll = async (req, res) => {
     Parcels.findAndCountAll({ limit, offset, where })
         .then(data => {
             if (data.count == 0) {
-                res.status(404).send({
+                res.status(200).send({
                     message: "Parcels were not found."
                 });
             } else {
                 const response = getPagingData(data, page, limit);
                 if (response.page > response.total_pages) {
-                    res.status(404).send({
+                    res.status(400).send({
                         message: `Page ${page} was not found.`
                     });
                 } else {
@@ -110,13 +110,13 @@ exports.findAllByCars = (req, res) => {
     })
         .then(data => {
             if (data.count == 0) {
-                res.status(404).send({
+                res.status(400).send({
                     message: `Parcels with car id ${id} were not found.`
                 });
             } else {
                 const response = getPagingData(data, page, limit);
                 if (response.page > response.total_pages) {
-                    res.status(404).send({
+                    res.status(400).send({
                         message: `Page ${page} was not found.`
                     });
                 } else {
@@ -151,7 +151,7 @@ exports.findOne = async (req, res) => {
     })
         .then(data => {
             if (data == null) {
-                res.status(404).send({
+                res.status(400).send({
                     message: `Parcel with id ${id} was not found.`
                 });
             } else {
@@ -178,14 +178,14 @@ exports.update = async (req, res) => {
         where.courierId = courier.id;
     } else if (req.user.role != 'Admin') {
         res.status(403).send({
-            message: "Only Admin can update parcel."
+            message: "Page access is restricted."
         });
         return;
     }
 
     const parcelExists = await Parcels.count({ where: { parcelNumber: id, ...where } }) > 0;
     if (!parcelExists) {
-        res.status(404).send({
+        res.status(400).send({
             message: `Parcel with id ${id} was not found.`
         });
         return;
@@ -193,7 +193,7 @@ exports.update = async (req, res) => {
 
     if(req.user.role != 'Admin' && where.hasOwnProperty('courierId') && (!req.body.hasOwnProperty('status') || (req.body.hasOwnProperty('status') && Object.keys(req.body).length > 1))) {
         res.status(400).send({
-            message: "Only status can be updated."
+            message: "Page access is restricted."
         });
         return;
     }
@@ -254,7 +254,7 @@ exports.update = async (req, res) => {
 exports.delete = (req, res) => {
     if (req.user.role != 'Admin') {
         res.status(403).send({
-            message: "Only Admin can delete parcels."
+            message: "Page access is restricted."
         });
         return;
     }
@@ -267,7 +267,7 @@ exports.delete = (req, res) => {
             if (num == 1) {
                 res.status(204).send();
             } else {
-                res.status(404).send({
+                res.status(400).send({
                     message: `Parcel with id ${id} was not found.`
                 });
             }

@@ -13,7 +13,7 @@ exports.register = (req, res) => {
     Users.create(user)
         .then(user => {
             user.dataValues.password = undefined;
-            user.dataValues.token = undefined;
+            user.dataValues.iat = undefined;
             const token = auth.generateToken(user);
             res.status(201).send({ user, token });
         })
@@ -26,7 +26,7 @@ exports.register = (req, res) => {
 
 exports.login = (req, res) => {
     const { username, password } = req.body;
-    Users.scope("withPassword").findOne({ where: { username } })
+    Users.scope("withPassword").findOne({ where: { username }, attributes: { exclude: ['iat'] } })
         .then(user => {
             if (user == null) {
                 res.status(400).send({
@@ -35,7 +35,6 @@ exports.login = (req, res) => {
             } else {
                 if (user.validPassword(password)) {
                     user.dataValues.password = undefined;
-                    user.dataValues.token = undefined;
                     const token = auth.generateToken(user);
                     res.status(201).send({ user, token });
                 } else {
@@ -53,40 +52,18 @@ exports.login = (req, res) => {
 };
 
 exports.logout = (req, res) => {
-    Users.findByPk(req.user.id)
-        .then(async data => {
-            if (data == null) {
-                res.status(404).send({
-                    message: `User with id ${id} was not found.`
-                });
-            } else {
-                data.token = null;
-                await data.save();
-                res.send({ message: "Logout successful." });
-            }
-        })
-        .catch(err => {
-            res.status(500).send({
-                message: err.message || "Some error occurred while retrieving users."
-            });
+    Users.update({ iat: null }, { where: { id: req.user.id } }).then(() => {
+        res.send({
+            message: "User logged out successfully."
         });
+    }).catch(err => {
+        res.status(500).send({
+            message: err.message || "Some error occurred while logging out."
+        });
+    });
 };
 
-exports.profile = (req, res) => {
-    Users.findByPk(req.user.id)
-        .then(async data => {
-            if (data == null) {
-                res.status(404).send({
-                    message: `User with id ${id} was not found.`
-                });
-            } else {
-                const courier = await Couriers.findOne({ where: { userId: req.user.id } });
-                res.send({...data.dataValues, courier });
-            }
-        })
-        .catch(err => {
-            res.status(500).send({
-                message: err.message || "Some error occurred while retrieving users."
-            });
-        });
+exports.profile = async (req, res) => {
+    const courier = await Couriers.findOne({ where: { userId: req.user.id } });
+    res.send({ ...req.user.dataValues, courier });
 };

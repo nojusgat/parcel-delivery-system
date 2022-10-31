@@ -3,7 +3,7 @@ const db = require("../models");
 const Users = db.users;
 
 exports.generateToken = (user) => {
-    let token = jwt.sign({
+    const token = jwt.sign({
         id: user.id,
         email: user.email,
         role: user.role
@@ -11,8 +11,10 @@ exports.generateToken = (user) => {
         expiresIn: process.env.jwt_expiration
     });
 
+    const decoded = jwt.verify(token, process.env.jwt_secret);
+
     Users.update({
-        token: token
+        iat: decoded.iat
     }, {
         where: {
             id: user.id
@@ -28,8 +30,10 @@ exports.authorization = async (req, res, next) => {
         const decoded = jwt.verify(token, process.env.jwt_secret);
 
         const user = await Users.findByPk(decoded.id);
-        if (!user || user.token != token)
+        if (!user || user.iat != decoded.iat)
             throw new Error();
+
+        user.dataValues.iat = undefined;
 
         req.user = user;
         next();

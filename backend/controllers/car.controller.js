@@ -6,7 +6,7 @@ const Couriers = db.couriers;
 exports.create = (req, res) => {
     if (req.user.role != "Admin") {
         res.status(403).send({
-            message: "Only Admin can create cars."
+            message: "Page access is restricted."
         });
         return;
     }
@@ -30,7 +30,7 @@ exports.create = (req, res) => {
 exports.findAll = (req, res) => {
     if (req.user.role != "Admin") {
         res.status(403).send({
-            message: "Only Admin can view all cars."
+            message: "Page access is restricted."
         });
         return;
     }
@@ -46,13 +46,19 @@ exports.findAll = (req, res) => {
 
     Cars.findAndCountAll({ limit, offset })
         .then(data => {
-            const response = getPagingData(data, page, limit);
-            if (response.page > response.total_pages) {
-                res.status(404).send({
-                    message: `Page ${page} was not found.`
+            if (data.count == 0) {
+                res.status(200).send({
+                    message: "Cars were not found."
                 });
             } else {
-                res.send(response);
+                const response = getPagingData(data, page, limit);
+                if (response.page > response.total_pages) {
+                    res.status(400).send({
+                        message: `Page ${page} was not found.`
+                    });
+                } else {
+                    res.send(response);
+                }
             }
         })
         .catch(err => {
@@ -68,7 +74,7 @@ exports.findOne = async (req, res) => {
     const courier = await Couriers.findOne({ where: { userId: req.user.id } });
     if (req.user.role != "Admin" && ((!courier || !courier.carId) || (courier && id != courier.carId))) {
         res.status(403).send({
-            message: "Only Admin can view cars."
+            message: "Page access is restricted."
         });
         return;
     }
@@ -76,7 +82,7 @@ exports.findOne = async (req, res) => {
     Cars.findByPk(id)
         .then(data => {
             if (data == null) {
-                res.status(404).send({
+                res.status(400).send({
                     message: `Car with id ${id} was not found.`
                 });
             } else {
@@ -93,7 +99,7 @@ exports.findOne = async (req, res) => {
 exports.update = async (req, res) => {
     if (req.user.role != "Admin") {
         res.status(403).send({
-            message: "Only Admin can update cars."
+            message: "Page access is restricted."
         });
         return;
     }
@@ -101,7 +107,7 @@ exports.update = async (req, res) => {
 
     const carExists = await Cars.count({ where: { id } }) > 0;
     if (!carExists) {
-        res.status(404).send({
+        res.status(400).send({
             message: `Car with id ${id} was not found.`
         });
         return;
@@ -139,7 +145,7 @@ exports.update = async (req, res) => {
 exports.delete = (req, res) => {
     if (req.user.role != "Admin") {
         res.status(403).send({
-            message: "Only Admin can delete cars."
+            message: "Page access is restricted."
         });
         return;
     }
@@ -152,7 +158,7 @@ exports.delete = (req, res) => {
             if (num == 1) {
                 res.status(204).send();
             } else {
-                res.status(404).send({
+                res.status(400).send({
                     message: `Car with id ${id} was not found.`
                 });
             }

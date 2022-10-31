@@ -46,8 +46,8 @@ module.exports = (sequelize, Sequelize) => {
             type: Sequelize.ENUM('User', 'Admin'),
             defaultValue: 'User'
         },
-        token: {
-            type: Sequelize.STRING,
+        iat: {
+            type: Sequelize.INTEGER,
             allowNull: true,
             default: null
         }

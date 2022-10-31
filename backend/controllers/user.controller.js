@@ -13,6 +13,7 @@ exports.register = (req, res) => {
     Users.create(user)
         .then(user => {
             user.dataValues.password = undefined;
+            user.dataValues.token = undefined;
             const token = auth.generateToken(user);
             res.status(201).send({ user, token });
         })
@@ -34,6 +35,7 @@ exports.login = (req, res) => {
             } else {
                 if (user.validPassword(password)) {
                     user.dataValues.password = undefined;
+                    user.dataValues.token = undefined;
                     const token = auth.generateToken(user);
                     res.status(201).send({ user, token });
                 } else {

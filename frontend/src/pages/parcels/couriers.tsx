@@ -122,6 +122,8 @@ export default function ManageParcelsCourier() {
           setShow={setShowAssignParcelModal}
           courier={courier}
           setCourier={setCourier}
+          toggleRender={toggleRender}
+          setToggleRender={setToggleRender}
         />
         <Footer />
       </div>

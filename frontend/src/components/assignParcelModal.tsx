@@ -1,5 +1,6 @@
 import { Modal, Pagination, Table } from "flowbite-react";
 import React from "react";
+import { Link } from "react-router-dom";
 import { getParcels } from "../utils/api";
 import { ParcelDetails } from "./parcelDetails";
 
@@ -8,6 +9,8 @@ interface AssignParcelModalProps {
   setShow: (show: boolean) => void;
   courier: any;
   setCourier: (parcel: any) => void;
+  toggleRender: boolean;
+  setToggleRender: (toggleRender: boolean) => void;
 }
 
 export function AssignParcelModal(props: AssignParcelModalProps) {
@@ -15,19 +18,14 @@ export function AssignParcelModal(props: AssignParcelModalProps) {
     props.setShow(false);
   };
 
-  const [loading, setLoading] = React.useState(false);
   const [page, setPage] = React.useState(1);
   const [parcels, setParcels] = React.useState<any>(null);
 
   React.useEffect(() => {
-    getParcels(page, 5, "&unassigned=true")
-      .then((res) => {
-        setParcels(res?.data);
-      })
-      .finally(() => {
-        setLoading(false);
-      });
-  }, [page]);
+    getParcels(page, 5, "&unassigned=true").then((res) => {
+      setParcels(res?.data);
+    });
+  }, [page, props.toggleRender]);
 
   const onPageChange = (page: number) => {
     setPage(page);
@@ -45,36 +43,48 @@ export function AssignParcelModal(props: AssignParcelModalProps) {
                 {props.courier?.firstname} {props.courier?.lastname}
               </span>
             </h3>
-            <Table>
-              <Table.Head>
-                <Table.HeadCell>#</Table.HeadCell>
-                <Table.HeadCell>Sender</Table.HeadCell>
-                <Table.HeadCell>Receiver</Table.HeadCell>
-                <Table.HeadCell>Weight</Table.HeadCell>
-                <Table.HeadCell>Price</Table.HeadCell>
-                <Table.HeadCell>Status</Table.HeadCell>
-                <Table.HeadCell>
-                  <span className="sr-only">Actions</span>
-                </Table.HeadCell>
-              </Table.Head>
-              <Table.Body className="divide-y">
-                {parcels?.results.map((parcel: any) => (
-                  <ParcelDetails
-                    key={parcel.parcelNumber}
-                    parcelData={parcel}
-                    showAssignBtn={true}
+            {parcels?.results?.length > 0 ? (
+              <>
+                <Table>
+                  <Table.Head>
+                    <Table.HeadCell>#</Table.HeadCell>
+                    <Table.HeadCell>Sender</Table.HeadCell>
+                    <Table.HeadCell>Receiver</Table.HeadCell>
+                    <Table.HeadCell>Weight</Table.HeadCell>
+                    <Table.HeadCell>Price</Table.HeadCell>
+                    <Table.HeadCell>
+                      <span className="sr-only">Actions</span>
+                    </Table.HeadCell>
+                  </Table.Head>
+                  <Table.Body className="divide-y">
+                    {parcels?.results.map((parcel: any) => (
+                      <ParcelDetails
+                        key={parcel.parcelNumber}
+                        parcelData={parcel}
+                        showAssignBtn={props.courier?.id}
+                        toggleRender={props.toggleRender}
+                        setToggleRender={props.setToggleRender}
+                      />
+                    ))}
+                  </Table.Body>
+                </Table>
+                {parcels?.total_pages > 1 ? (
+                  <Pagination
+                    currentPage={page}
+                    onPageChange={onPageChange}
+                    showIcons={true}
+                    totalPages={parcels?.total_pages || 1}
                   />
-                ))}
-              </Table.Body>
-            </Table>
-            {parcels?.total_pages > 1 ? (
-              <Pagination
-                currentPage={page}
-                onPageChange={onPageChange}
-                showIcons={true}
-                totalPages={parcels?.total_pages || 1}
-              />
-            ) : null}
+                ) : null}
+              </>
+            ) : (
+              <div className="text-center">
+                <h3 className="text-lg font-medium text-gray-900 dark:text-white">
+                  No parcels to assign, please{" "}
+                  <Link to="/parcels/manage" className="hover:underline">Add a new one</Link>
+                </h3>
+              </div>
+            )}
           </div>
         </Modal.Body>
       </Modal>

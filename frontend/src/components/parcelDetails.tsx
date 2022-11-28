@@ -1,11 +1,11 @@
 import { Table, Badge, Button, Tooltip, Spinner } from "flowbite-react";
 import React from "react";
-import { BsPencil, BsTrash } from "react-icons/bs";
+import { BsJournalMinus, BsPencil, BsTrash } from "react-icons/bs";
 import { Link, useNavigate } from "react-router-dom";
 import { ConfirmModal } from "./confirmModal";
-import { deleteParcel as apiDeleteParcel } from "../utils/api";
+import { deleteParcel as apiDeleteParcel, updateParcel } from "../utils/api";
 import { EditParcelModal } from "./editParcelModal";
-import { AssignParcelModal } from "./assignParcelModal";
+import { FaMinus } from "react-icons/fa";
 
 export function ParcelDetails({
   parcelData,
@@ -18,7 +18,9 @@ export function ParcelDetails({
 }: any) {
   const [showDeleteModal, setShowDeleteModal] = React.useState(false);
   const [showEditModal, setShowEditModal] = React.useState(false);
+  const [showUnassignModal, setShowUnassignModal] = React.useState(false);
   const [loadingDelete, setLoadingDelete] = React.useState(false);
+  const [loadingAssign, setLoadingAssign] = React.useState(false);
 
   const [parcel, setParcel] = React.useState<any>(parcelData);
 
@@ -32,6 +34,11 @@ export function ParcelDetails({
   const showDeleteParcelModal = () => {
     if (!showEditDeleteBtn) return;
     setShowDeleteModal(true);
+  };
+
+  const showUnassignParcelModal = () => {
+    if (!showEditDeleteBtn) return;
+    setShowUnassignModal(true);
   };
 
   const deleteParcel = () => {
@@ -49,6 +56,21 @@ export function ParcelDetails({
       });
   };
 
+  const unassignParcel = () => {
+    if (!showEditDeleteBtn) return;
+    setShowUnassignModal(false);
+    setLoadingAssign(true);
+    updateParcel(parcel.parcelNumber, { courierId: null })
+      .then((res) => {
+        if (res?.status === 200) {
+          setParcel(res.data);
+        }
+      })
+      .finally(() => {
+        setLoadingAssign(false);
+      });
+  };
+
   const setToDeliver = () => {
     if (!showDeliverBtn) return;
     localStorage.setItem("parcelId", parcel.parcelNumber);
@@ -57,7 +79,17 @@ export function ParcelDetails({
 
   const assignToCourier = () => {
     if (!showAssignBtn) return;
-    console.log("test");
+    setLoadingAssign(true);
+    updateParcel(parcel.parcelNumber, { courierId: showAssignBtn })
+      .then((res) => {
+        if (res?.status === 200) {
+          setParcel(res.data);
+        }
+      })
+      .finally(() => {
+        setLoadingAssign(false);
+        setToggleRender(!toggleRender);
+      });
   };
 
   return (
@@ -113,12 +145,13 @@ export function ParcelDetails({
         {showEditDeleteBtn ? (
           <Table.Cell>
             <span className="flex flex-wrap gap-2">
-              <Tooltip content="Edit Parcel">
+              <Button.Group outline={true}>
                 <Button size="sm" onClick={editParcel}>
-                  <BsPencil className="h-4 w-4" />
+                  <Tooltip content="Edit Parcel">
+                    <BsPencil className="h-4 w-4" />
+                  </Tooltip>
                 </Button>
-              </Tooltip>
-              <Tooltip content="Delete Parcel">
+
                 {loadingDelete ? (
                   <Button size="sm" color="failure">
                     <Spinner size="sm" light={true} />
@@ -129,10 +162,28 @@ export function ParcelDetails({
                     color="failure"
                     onClick={showDeleteParcelModal}
                   >
-                    <BsTrash className="h-4 w-4" />
+                    <Tooltip content="Delete Parcel">
+                      <BsTrash className="h-4 w-4" />
+                    </Tooltip>
                   </Button>
                 )}
-              </Tooltip>
+
+                {loadingAssign ? (
+                  <Button size="sm" color="purple">
+                    <Spinner size="sm" light={true} />
+                  </Button>
+                ) : (
+                  <Button
+                    size="sm"
+                    color="purple"
+                    onClick={showUnassignParcelModal}
+                  >
+                    <Tooltip content="Unassign Parcel">
+                      <BsJournalMinus className="h-4 w-4" />
+                    </Tooltip>
+                  </Button>
+                )}
+              </Button.Group>
             </span>
           </Table.Cell>
         ) : null}
@@ -144,9 +195,18 @@ export function ParcelDetails({
           </Table.Cell>
         ) : null}
         {showAssignBtn ? (
-          <Table.Cell>
-            <Button onClick={assignToCourier}>Assign</Button>
-          </Table.Cell>
+          loadingAssign ? (
+            <Table.Cell>
+              <Button>
+                <Spinner size="sm" light={true} />
+                <span>Assigning...</span>
+              </Button>
+            </Table.Cell>
+          ) : (
+            <Table.Cell>
+              <Button onClick={assignToCourier}>Assign</Button>
+            </Table.Cell>
+          )
         ) : null}
       </Table.Row>
 
@@ -159,6 +219,15 @@ export function ParcelDetails({
             message={`Are you sure you want to delete ${parcel.parcelNumber} parcel?`}
             confirmText={"Yes, I'm sure"}
             cancelText={"No, cancel"}
+          />
+          <ConfirmModal
+            show={showUnassignModal}
+            setShow={setShowUnassignModal}
+            onConfirm={unassignParcel}
+            message={`Are you sure you want to unassign ${parcel.parcelNumber} parcel?`}
+            confirmText={"Yes, I'm sure"}
+            cancelText={"No, cancel"}
+            confirmColor="purple"
           />
           <EditParcelModal
             show={showEditModal}

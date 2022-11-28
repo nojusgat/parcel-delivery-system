@@ -270,7 +270,7 @@ exports.update = async (req, res) => {
         return;
     }
 
-    if ("courierId" in req.body) {
+    if ("courierId" in req.body && req.body.courierId != null) {
         const courierExists = await Couriers.count({ where: { id: req.body.courierId } }) > 0;;
         if (!courierExists) {
             res.status(400).send({

@@ -12,7 +12,7 @@ import { FiPhoneCall } from "react-icons/fi";
 import { AiOutlineWarning } from "react-icons/ai";
 import { Alert, Badge, Button, Spinner } from "flowbite-react";
 import { Link } from "react-router-dom";
-import { ConfirmModal } from "../components/confirmModal";
+import { ConfirmModal } from "../components/modals/confirmModal";
 
 export default function Deliveries() {
   const [loadingHeader, setLoadingHeader] = React.useState(true);

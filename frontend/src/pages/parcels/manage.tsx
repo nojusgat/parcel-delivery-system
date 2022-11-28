@@ -7,6 +7,7 @@ import { Loader } from "../../components/loader";
 
 import { BsPlusLg } from "react-icons/bs";
 import { ParcelDetails } from "../../components/parcelDetails";
+import { CreateParcelModal } from "../../components/modals/createParcelModal";
 
 export default function ManageParcels() {
   const [toggleRender, setToggleRender] = React.useState(false);
@@ -15,6 +16,8 @@ export default function ManageParcels() {
 
   const [loadingHeader, setLoadingHeader] = React.useState(true);
   const [loadingParcels, setLoadingParcels] = React.useState(true);
+
+  const [showCreateParcelModal, setShowCreateParcelModal] = React.useState(false);
 
   React.useEffect(() => {
     getParcels(page)
@@ -31,7 +34,7 @@ export default function ManageParcels() {
   };
 
   const createParcel = () => {
-    console.log("create parcel");
+    setShowCreateParcelModal(true);
   };
 
   return (
@@ -83,6 +86,12 @@ export default function ManageParcels() {
             totalPages={parcels?.total_pages || 1}
           />
         ) : null}
+        <CreateParcelModal
+          toggleRender={toggleRender}
+          setToggleRender={setToggleRender}
+          show={showCreateParcelModal}
+          setShow={setShowCreateParcelModal}
+        />
         <Footer />
       </div>
     </>

@@ -8,8 +8,8 @@ import {
 } from "flowbite-react";
 import React from "react";
 import { Link } from "react-router-dom";
-import { login } from "../utils/api";
-import { saveUserInfo } from "../utils/storage";
+import { login } from "../../utils/api";
+import { saveUserInfo } from "../../utils/storage";
 import { HiInformationCircle } from "react-icons/hi";
 
 interface LoginModalProps {

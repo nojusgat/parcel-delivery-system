@@ -2,10 +2,9 @@ import { Table, Badge, Button, Tooltip, Spinner } from "flowbite-react";
 import React from "react";
 import { BsJournalMinus, BsPencil, BsTrash } from "react-icons/bs";
 import { Link, useNavigate } from "react-router-dom";
-import { ConfirmModal } from "./confirmModal";
+import { ConfirmModal } from "./modals/confirmModal";
 import { deleteParcel as apiDeleteParcel, updateParcel } from "../utils/api";
-import { EditParcelModal } from "./editParcelModal";
-import { FaMinus } from "react-icons/fa";
+import { EditParcelModal } from "./modals/editParcelModal";
 
 export function ParcelDetails({
   parcelData,
@@ -67,6 +66,7 @@ export function ParcelDetails({
         }
       })
       .finally(() => {
+        setToggleRender(!toggleRender);
         setLoadingAssign(false);
       });
   };
@@ -87,8 +87,8 @@ export function ParcelDetails({
         }
       })
       .finally(() => {
-        setLoadingAssign(false);
         setToggleRender(!toggleRender);
+        setLoadingAssign(false);
       });
   };
 
@@ -118,9 +118,14 @@ export function ParcelDetails({
         {showCourier ? (
           <Table.Cell>
             {parcel.courier ? (
-              <Link to={"/parcels/manage/couriers/" + parcel.courier?.id}>
-                {parcel.courier?.firstname + " " + parcel.courier?.lastname}
-              </Link>
+              <Tooltip content="View courier parcels">
+                <Link
+                  to={"/parcels/manage/couriers/" + parcel.courier?.id}
+                  className="hover:underline"
+                >
+                  {parcel.courier?.firstname + " " + parcel.courier?.lastname}
+                </Link>
+              </Tooltip>
             ) : (
               <Tooltip content="Click to assign">
                 <b className="cursor-pointer">None</b>
@@ -151,10 +156,9 @@ export function ParcelDetails({
                     <BsPencil className="h-4 w-4" />
                   </Tooltip>
                 </Button>
-
                 {loadingDelete ? (
                   <Button size="sm" color="failure">
-                    <Spinner size="sm" light={true} />
+                    <Spinner size="sm" className="h-4 w-4" light={true} />
                   </Button>
                 ) : (
                   <Button
@@ -167,16 +171,16 @@ export function ParcelDetails({
                     </Tooltip>
                   </Button>
                 )}
-
                 {loadingAssign ? (
                   <Button size="sm" color="purple">
-                    <Spinner size="sm" light={true} />
+                    <Spinner size="sm" className="h-4 w-4" light={true} />
                   </Button>
                 ) : (
                   <Button
                     size="sm"
                     color="purple"
                     onClick={showUnassignParcelModal}
+                    disabled={parcel.courier === null}
                   >
                     <Tooltip content="Unassign Parcel">
                       <BsJournalMinus className="h-4 w-4" />
@@ -198,7 +202,7 @@ export function ParcelDetails({
           loadingAssign ? (
             <Table.Cell>
               <Button>
-                <Spinner size="sm" light={true} />
+                <Spinner size="sm" light={true} className="mr-3" />
                 <span>Assigning...</span>
               </Button>
             </Table.Cell>

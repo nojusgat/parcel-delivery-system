@@ -1,8 +1,8 @@
 import { Modal, Pagination, Table } from "flowbite-react";
 import React from "react";
 import { Link } from "react-router-dom";
-import { getParcels } from "../utils/api";
-import { ParcelDetails } from "./parcelDetails";
+import { getParcels } from "../../utils/api";
+import { ParcelDetails } from "../parcelDetails";
 
 interface AssignParcelModalProps {
   show: boolean;
@@ -33,7 +33,7 @@ export function AssignParcelModal(props: AssignParcelModalProps) {
 
   return (
     <React.Fragment>
-      <Modal show={props.show} size="8xl" popup={true} onClose={close}>
+      <Modal show={props.show} size="7xl" popup={true} onClose={close}>
         <Modal.Header />
         <Modal.Body>
           <div className="space-y-6 px-6 pb-4 sm:pb-6 lg:px-8 xl:pb-8">

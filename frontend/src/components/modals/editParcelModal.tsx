@@ -7,7 +7,7 @@ import {
   TextInput,
 } from "flowbite-react";
 import React from "react";
-import { updateParcel } from "../utils/api";
+import { updateParcel } from "../../utils/api";
 
 interface EditParcelModalProps {
   show: boolean;
@@ -96,7 +96,10 @@ export function EditParcelModal(props: EditParcelModalProps) {
         <Modal.Body>
           <div className="space-y-6 px-6 pb-4 sm:pb-6 lg:px-8 xl:pb-8">
             <h3 className="text-xl font-medium text-gray-900 dark:text-white">
-              Edit Parcel {props.parcel?.parcelNumber}
+              Edit Parcel{" "}
+              <span className="text-blue-700">
+                {props.parcel?.parcelNumber}
+              </span>
             </h3>
             <form onSubmit={onSubmit}>
               <div className="grid grid-cols-1 gap-3 md:grid-cols-3 mb-5">
@@ -210,19 +213,11 @@ export function EditParcelModal(props: EditParcelModalProps) {
                     id="status"
                     required={true}
                     onChange={(e) => setStatus(e.target.value)}
+                    value={status}
                   >
-                    <option selected={status === "Pending"} value="Pending">
-                      Pending
-                    </option>
-                    <option
-                      selected={status === "In progress"}
-                      value="In progress"
-                    >
-                      In progress
-                    </option>
-                    <option selected={status === "Delivered"} value="Delivered">
-                      Delivered
-                    </option>
+                    <option value="Pending">Pending</option>
+                    <option value="In progress">In progress</option>
+                    <option value="Delivered">Delivered</option>
                   </Select>
                 </div>
               </div>

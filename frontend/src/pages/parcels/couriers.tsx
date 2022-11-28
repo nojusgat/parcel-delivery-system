@@ -8,7 +8,7 @@ import { Loader } from "../../components/loader";
 import { MdAssignment } from "react-icons/md";
 import { ParcelDetails } from "../../components/parcelDetails";
 import { useParams } from "react-router-dom";
-import { AssignParcelModal } from "../../components/assignParcelModal";
+import { AssignParcelModal } from "../../components/modals/assignParcelModal";
 
 export default function ManageParcelsCourier() {
   const [toggleRender, setToggleRender] = React.useState(false);

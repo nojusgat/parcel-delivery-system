@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/parcel-delivery-system/static/css/main.b4168315.css",
-    "main.js": "/parcel-delivery-system/static/js/main.5599bbc6.js",
+    "main.css": "/parcel-delivery-system/static/css/main.ac2c412d.css",
+    "main.js": "/parcel-delivery-system/static/js/main.c46acc94.js",
     "static/js/787.cda612ba.chunk.js": "/parcel-delivery-system/static/js/787.cda612ba.chunk.js",
     "index.html": "/parcel-delivery-system/index.html",
-    "main.b4168315.css.map": "/parcel-delivery-system/static/css/main.b4168315.css.map",
-    "main.5599bbc6.js.map": "/parcel-delivery-system/static/js/main.5599bbc6.js.map",
+    "main.ac2c412d.css.map": "/parcel-delivery-system/static/css/main.ac2c412d.css.map",
+    "main.c46acc94.js.map": "/parcel-delivery-system/static/js/main.c46acc94.js.map",
     "787.cda612ba.chunk.js.map": "/parcel-delivery-system/static/js/787.cda612ba.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.b4168315.css",
-    "static/js/main.5599bbc6.js"
+    "static/css/main.ac2c412d.css",
+    "static/js/main.c46acc94.js"
   ]
 }

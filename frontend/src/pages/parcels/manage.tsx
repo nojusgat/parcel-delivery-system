@@ -1,132 +1,12 @@
-import {
-  Table,
-  Pagination,
-  Badge,
-  Button,
-  Tooltip,
-  Spinner,
-} from "flowbite-react";
+import { Table, Pagination, Button, Tooltip } from "flowbite-react";
 import React from "react";
 import { Header } from "../../components/header";
 import { Footer } from "../../components/footer";
-import { getParcels, deleteParcel as apiDeleteParcel } from "../../utils/api";
+import { getParcels } from "../../utils/api";
 import { Loader } from "../../components/loader";
 
-import { BsPencil, BsTrash, BsPlusLg } from "react-icons/bs";
-import { ConfirmModal } from "../../components/confirmModal";
-
-function ParcelDetails({ parcel, toggleRender, setToggleRender }: any) {
-  const [showDeleteModal, setShowDeleteModal] = React.useState(false);
-  const [loadingDelete, setLoadingDelete] = React.useState(false);
-
-  const editParcel = () => {
-    console.log(parcel.parcelNumber);
-  };
-
-  const showDeleteParcelModal = () => {
-    setShowDeleteModal(true);
-  };
-
-  const deleteParcel = () => {
-    setShowDeleteModal(false);
-    setLoadingDelete(true);
-    apiDeleteParcel(parcel.parcelNumber)
-      .then((res) => {
-        if (res?.status === 204) {
-          setToggleRender(!toggleRender);
-        }
-      })
-      .finally(() => {
-        setLoadingDelete(false);
-      });
-  };
-
-  return (
-    <>
-      <Table.Row
-        className="bg-white dark:border-gray-700 dark:bg-gray-800"
-        key={parcel.parcelNumber}
-      >
-        <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
-          {parcel.parcelNumber}
-        </Table.Cell>
-        <Table.Cell>
-          <span className="flex flex-col gap-2">
-            <span>{parcel.senderName}</span>
-            <span>{parcel.senderAddress}</span>
-          </span>
-        </Table.Cell>
-        <Table.Cell>
-          <span className="flex flex-col gap-2">
-            <span>{parcel.receiverName}</span>
-            <span>{parcel.receiverAddress}</span>
-          </span>
-        </Table.Cell>
-        <Table.Cell>{parcel.weight} kg</Table.Cell>
-        <Table.Cell>{parcel.price} €</Table.Cell>
-        <Table.Cell>
-          <span className="flex flex-wrap">
-            <Badge
-              color={
-                parcel.status === "Pending"
-                  ? "warning"
-                  : parcel.status === "In progress"
-                  ? "pink"
-                  : "success"
-              }
-              size="sm"
-              className="text-center"
-            >
-              {parcel.status}
-            </Badge>
-          </span>
-        </Table.Cell>
-        <Table.Cell>
-          {parcel.courier ? (
-            parcel.courier?.firstname + " " + parcel.courier?.lastname
-          ) : (
-            <Tooltip content="Click to assign">
-              <b className="cursor-pointer">None</b>
-            </Tooltip>
-          )}
-        </Table.Cell>
-        <Table.Cell>
-          <span className="flex flex-wrap gap-2">
-            <Tooltip content="Edit Parcel">
-              <Button size="sm" onClick={editParcel}>
-                <BsPencil className="h-4 w-4" />
-              </Button>
-            </Tooltip>
-            <Tooltip content="Delete Parcel">
-              {loadingDelete ? (
-                <Button size="sm" color="failure">
-                  <Spinner size="sm" light={true} />
-                </Button>
-              ) : (
-                <Button
-                  size="sm"
-                  color="failure"
-                  onClick={showDeleteParcelModal}
-                >
-                  <BsTrash className="h-4 w-4" />
-                </Button>
-              )}
-            </Tooltip>
-          </span>
-        </Table.Cell>
-      </Table.Row>
-
-      <ConfirmModal
-        show={showDeleteModal}
-        setShow={setShowDeleteModal}
-        onConfirm={deleteParcel}
-        message={`Are you sure you want to delete ${parcel.parcelNumber} parcel?`}
-        confirmText={"Yes, I'm sure"}
-        cancelText={"No, cancel"}
-      />
-    </>
-  );
-}
+import { BsPlusLg } from "react-icons/bs";
+import { ParcelDetails } from "../../components/parcelDetails";
 
 export default function ManageParcels() {
   const [toggleRender, setToggleRender] = React.useState(false);
@@ -173,12 +53,11 @@ export default function ManageParcels() {
         <Table>
           <Table.Head>
             <Table.HeadCell>#</Table.HeadCell>
+            <Table.HeadCell>Courier</Table.HeadCell>
             <Table.HeadCell>Sender</Table.HeadCell>
             <Table.HeadCell>Receiver</Table.HeadCell>
             <Table.HeadCell>Weight</Table.HeadCell>
             <Table.HeadCell>Price</Table.HeadCell>
-            <Table.HeadCell>Status</Table.HeadCell>
-            <Table.HeadCell>Courier</Table.HeadCell>
             <Table.HeadCell>
               <span className="sr-only">Actions</span>
             </Table.HeadCell>
@@ -186,9 +65,12 @@ export default function ManageParcels() {
           <Table.Body className="divide-y">
             {parcels?.results.map((parcel: any) => (
               <ParcelDetails
-                parcel={parcel}
+                key={parcel.parcelNumber}
+                parcelData={parcel}
                 toggleRender={toggleRender}
                 setToggleRender={setToggleRender}
+                showCourier={true}
+                showEditDeleteBtn={true}
               />
             ))}
           </Table.Body>

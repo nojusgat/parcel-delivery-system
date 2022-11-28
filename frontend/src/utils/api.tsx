@@ -154,9 +154,25 @@ export const getParcel = async (parcelId: string) => {
   return res;
 };
 
-export const getParcels = async (page: number, perPage: number = 10) => {
+export const getParcels = async (page: number, perPage: number = 10, extra = "") => {
   const token = getUserInfo()?.token;
-  const res = await api.get(`/parcels?page=${page}&size=${perPage}`, {
+  const res = await api.get(`/parcels?page=${page}&size=${perPage}${extra}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  if (res.status === 401) {
+    saveUserInfo(null);
+    return null;
+  }
+
+  return res;
+};
+
+export const getParcelsForCourier = async (courierId: number, page: number, perPage: number = 10) => {
+  const token = getUserInfo()?.token;
+  const res = await api.get(`/couriers/${courierId}/parcels?page=${page}&size=${perPage}`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },

@@ -5,6 +5,7 @@ import { Loader } from "./components/loader";
 import Parcels from "./pages/parcels/parcels";
 import ManageParcels from "./pages/parcels/manage";
 import Register from "./pages/register";
+import ManageParcelsCourier from "./pages/parcels/couriers";
 
 const Home = React.lazy(() => import("./pages/home"));
 const Deliveries = React.lazy(() => import("./pages/deliveries"));
@@ -52,6 +53,14 @@ export function App() {
             element={
               <RolesAuthRoute role="Admin">
                 <ManageParcels />
+              </RolesAuthRoute>
+            }
+          />
+          <Route
+            path="/parcels/manage/couriers/:courierId"
+            element={
+              <RolesAuthRoute role="Admin">
+                <ManageParcelsCourier />
               </RolesAuthRoute>
             }
           />

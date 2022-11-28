@@ -37,7 +37,7 @@ exports.create = (req, res) => {
 };
 
 exports.findAll = async (req, res) => {
-    const { page, size } = req.query;
+    const { page, size, unassigned } = req.query;
     if (page != null && isNaN(page) || size != null && isNaN(size)) {
         res.status(400).send({
             message: "Page and size must be numbers."
@@ -52,6 +52,10 @@ exports.findAll = async (req, res) => {
         where: { userId: req.user.id },
         attributes: ['id']
     });
+
+    if(unassigned != null && unassigned == 'true') {
+        where.courierId = null;
+    }
 
     if (courier != null) {
         where.courierId = courier.id;

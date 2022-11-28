@@ -199,9 +199,18 @@ exports.findAllByCars = (req, res) => {
 exports.findOne = async (req, res) => {
     const id = req.params.id;
 
-    Parcels.findByPk(id, {
-        include: [
-            {
+    const data = {
+        where: { "parcelNumber": id },
+    }
+
+    if(req.user != null) {
+        const courier = await Couriers.findOne({
+            where: { id: id, userId: req.user.id },
+            attributes: ['id']
+        });
+    
+        if (req.user.role == 'Admin' || courier != null) {
+            data.include = {
                 model: Couriers,
                 as: "courier",
                 include: ["car", "user"],
@@ -209,11 +218,17 @@ exports.findOne = async (req, res) => {
                     exclude: ['carId', 'userId']
                 }
             }
-        ],
-        attributes: {
-            exclude: ['courierId']
+            data.attributes = {
+                exclude: ['courierId']
+            }
+        } else {
+            data.attributes = [ 'parcelNumber', 'status', 'senderName', 'receiverName', 'weight', 'createdAt', 'updatedAt' ]
         }
-    })
+    } else {
+        data.attributes = [ 'parcelNumber', 'status', 'senderName', 'receiverName', 'weight', 'createdAt', 'updatedAt' ]
+    }
+
+    Parcels.findOne(data)
         .then(data => {
             if (data == null) {
                 res.status(400).send({

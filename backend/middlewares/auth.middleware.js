@@ -43,3 +43,22 @@ exports.authorization = async (req, res, next) => {
         });
     }
 };
+
+exports.authorization_check = async (req, res, next) => {
+    try {
+        const token = req.headers.authorization.split(" ")[1];
+        const decoded = jwt.verify(token, process.env.jwt_secret);
+
+        const user = await Users.findByPk(decoded.id);
+        if (!user || user.iat != decoded.iat)
+            throw new Error();
+
+        user.dataValues.iat = undefined;
+
+        req.user = user;
+        next();
+    } catch (error) {
+        req.user = null;
+        next();
+    }
+};

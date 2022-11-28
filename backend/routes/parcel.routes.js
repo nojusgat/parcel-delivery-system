@@ -6,7 +6,7 @@ module.exports = app => {
 
     router.post("/", auth.authorization, parcels.create);
     router.get("/", auth.authorization, parcels.findAll);
-    router.get("/:id", parcels.findOne);
+    router.get("/:id", auth.authorization_check, parcels.findOne);
     router.put("/:id", auth.authorization, parcels.update);
     router.delete("/:id", auth.authorization, parcels.delete);
 

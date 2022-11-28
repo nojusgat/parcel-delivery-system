@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { HashRouter as Router, Routes, Route } from "react-router-dom";
 import { RolesAuthRoute } from "./utils/others";
 import React, { Suspense } from "react";
 import { Loader } from "./components/loader";
@@ -6,9 +6,8 @@ import Parcels from "./pages/parcels/parcels";
 import ManageParcels from "./pages/parcels/manage";
 import Register from "./pages/register";
 import ManageParcelsCourier from "./pages/parcels/couriers";
-
-const Home = React.lazy(() => import("./pages/home"));
-const Deliveries = React.lazy(() => import("./pages/deliveries"));
+import Home from "./pages/home";
+import Deliveries from "./pages/deliveries";
 
 export function App() {
   return (

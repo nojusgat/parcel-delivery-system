@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/parcel-delivery-system/static/css/main.b4168315.css",
-    "main.js": "/parcel-delivery-system/static/js/main.8d489c8d.js",
+    "main.js": "/parcel-delivery-system/static/js/main.5599bbc6.js",
     "static/js/787.cda612ba.chunk.js": "/parcel-delivery-system/static/js/787.cda612ba.chunk.js",
     "index.html": "/parcel-delivery-system/index.html",
     "main.b4168315.css.map": "/parcel-delivery-system/static/css/main.b4168315.css.map",
-    "main.8d489c8d.js.map": "/parcel-delivery-system/static/js/main.8d489c8d.js.map",
+    "main.5599bbc6.js.map": "/parcel-delivery-system/static/js/main.5599bbc6.js.map",
     "787.cda612ba.chunk.js.map": "/parcel-delivery-system/static/js/787.cda612ba.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.b4168315.css",
-    "static/js/main.8d489c8d.js"
+    "static/js/main.5599bbc6.js"
   ]
 }

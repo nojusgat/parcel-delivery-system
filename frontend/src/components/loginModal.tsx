@@ -12,12 +12,12 @@ import { login } from "../utils/api";
 import { saveUserInfo } from "../utils/storage";
 import { HiInformationCircle } from "react-icons/hi";
 
-interface LoginProps {
+interface LoginModalProps {
   show: boolean;
   setShow: (show: boolean) => void;
 }
 
-export function Login(props: LoginProps) {
+export function LoginModal(props: LoginModalProps) {
   const close = () => {
     setUsername("");
     setPassword("");

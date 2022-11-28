@@ -90,9 +90,9 @@ export const getCar = async (carId: number) => {
   return res;
 };
 
-export const getParcels = async (page: number, perPage: number = 10) => {
+export const createParcel = async (data: any) => {
   const token = getUserInfo()?.token;
-  const res = await api.get(`/parcels?page=${page}&size=${perPage}`, {
+  const res = await api.post(`/parcels`, data, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -104,23 +104,7 @@ export const getParcels = async (page: number, perPage: number = 10) => {
   }
 
   return res;
-}
-
-export const getParcel = async (parcelId: string) => {
-  const token = getUserInfo()?.token;
-  const res = await api.get(`/parcels/${parcelId}`, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
-
-  if (res.status === 401) {
-    saveUserInfo(null);
-    return null;
-  }
-
-  return res;
-}
+};
 
 export const updateParcel = async (parcelId: string, data: any) => {
   const token = getUserInfo()?.token;
@@ -136,7 +120,135 @@ export const updateParcel = async (parcelId: string, data: any) => {
   }
 
   return res;
-}
+};
+
+export const deleteParcel = async (parcelId: string) => {
+  const token = getUserInfo()?.token;
+  const res = await api.delete(`/parcels/${parcelId}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  if (res.status === 401) {
+    saveUserInfo(null);
+    return null;
+  }
+
+  return res;
+};
+
+export const getParcel = async (parcelId: string) => {
+  const token = getUserInfo()?.token;
+  const res = await api.get(`/parcels/${parcelId}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  if (res.status === 401) {
+    saveUserInfo(null);
+    return null;
+  }
+
+  return res;
+};
+
+export const getParcels = async (page: number, perPage: number = 10) => {
+  const token = getUserInfo()?.token;
+  const res = await api.get(`/parcels?page=${page}&size=${perPage}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  if (res.status === 401) {
+    saveUserInfo(null);
+    return null;
+  }
+
+  return res;
+};
+
+export const createCourier = async (data: any) => {
+  const token = getUserInfo()?.token;
+  const res = await api.post(`/couriers`, data, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  if (res.status === 401) {
+    saveUserInfo(null);
+    return null;
+  }
+
+  return res;
+};
+
+export const updateCourier = async (courierId: number, data: any) => {
+  const token = getUserInfo()?.token;
+  const res = await api.put(`/couriers/${courierId}`, data, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  if (res.status === 401) {
+    saveUserInfo(null);
+    return null;
+  }
+
+  return res;
+};
+
+export const deleteCourier = async (courierId: number) => {
+  const token = getUserInfo()?.token;
+  const res = await api.delete(`/couriers/${courierId}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  if (res.status === 401) {
+    saveUserInfo(null);
+    return null;
+  }
+
+  return res;
+};
+
+export const getCourier = async (courierId: number) => {
+  const token = getUserInfo()?.token;
+  const res = await api.get(`/couriers/${courierId}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  if (res.status === 401) {
+    saveUserInfo(null);
+    return null;
+  }
+
+  return res;
+};
+
+export const getCouriers = async (page: number, perPage: number = 10) => {
+  const token = getUserInfo()?.token;
+  const res = await api.get(`/couriers?page=${page}&size=${perPage}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  if (res.status === 401) {
+    saveUserInfo(null);
+    return null;
+  }
+
+  return res;
+};
 
 export const getCoordinates = async (address: string) => {
   const res = await axios.get(

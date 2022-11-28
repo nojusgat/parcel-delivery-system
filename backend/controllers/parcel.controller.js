@@ -62,7 +62,13 @@ exports.findAll = async (req, res) => {
         return;
     }
 
-    Parcels.findAndCountAll({ limit, offset, where })
+    Parcels.findAndCountAll({ limit, offset, where, include: {
+        model: Couriers,
+        as: "courier",
+        attributes: ['id', 'firstname', 'lastname'],
+    }, attributes: {
+        exclude: ['courierId']
+    }})
         .then(data => {
             if (data.count == 0) {
                 res.status(200).send({
@@ -86,7 +92,62 @@ exports.findAll = async (req, res) => {
         });
 };
 
+exports.findAllByCourier = async (req, res) => {
+    const id = req.params.id;
+    const { page, size } = req.query;
+    if (page != null && isNaN(page) || size != null && isNaN(size)) {
+        res.status(400).send({
+            message: "Page and size must be numbers."
+        });
+        return;
+    }
+
+    const { limit, offset } = getPagination(page, size);
+
+    const courier = await Couriers.findOne({
+        where: { id: id, userId: req.user.id },
+        attributes: ['id']
+    });
+
+    if (req.user.role != 'Admin' && courier == null) {
+        res.status(403).send({
+            message: "Page access is restricted."
+        });
+        return;
+    }
+
+    Parcels.findAndCountAll({limit, offset, where: { courierId: id }})
+        .then(data => {
+            if (data.count == 0) {
+                res.status(400).send({
+                    message: `Parcels with courier id ${id} were not found.`
+                });
+            } else {
+                const response = getPagingData(data, page, limit);
+                if (response.page > response.total_pages) {
+                    res.status(400).send({
+                        message: `Page ${page} was not found.`
+                    });
+                } else {
+                    res.send(response);
+                }
+            }
+        })
+        .catch(err => {
+            res.status(500).send({
+                message: err.message || "Some error occurred while retrieving parcels."
+            });
+        });
+};
+
 exports.findAllByCars = (req, res) => {
+    if (req.user.role != 'Admin') {
+        res.status(403).send({
+            message: "Page access is restricted."
+        });
+        return;
+    }
+
     const id = req.params.id;
     const { page, size } = req.query;
     if (page != null && isNaN(page) || size != null && isNaN(size)) {

@@ -11,6 +11,7 @@ export function RolesAuthRoute({
 }) {
   const userInfo = getUserInfo();
   const allowed =
+    (role === null && userInfo === null) ||
     (role === "Courier" && userInfo?.courier != null) ||
     userInfo?.user?.role === role
       ? true

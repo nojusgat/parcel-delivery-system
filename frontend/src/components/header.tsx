@@ -1,17 +1,18 @@
 import { Button, Dropdown, Navbar } from "flowbite-react";
-import { Link, useLocation, matchPath } from "react-router-dom";
+import { Link, useLocation, matchPath, useNavigate } from "react-router-dom";
 
 import { FiLogIn } from "react-icons/fi";
 import { FaShippingFast } from "react-icons/fa";
 import { CgProfile } from "react-icons/cg";
 import { getUserInfo, saveUserInfo } from "../utils/storage";
-import { Login } from "./login";
+import { LoginModal } from "./loginModal";
 import React from "react";
 import { getProfile, logout } from "../utils/api";
 
 export function Header(props: { loading: boolean, setLoading: (loading: boolean) => void }) {
   const [showLoginModal, setShowLoginModal] = React.useState(false);
   const { pathname } = useLocation();
+  const navigate = useNavigate();
 
   const [userToken, setUserToken] = React.useState<any>(false);
   const [isCourier, setIsCourier] = React.useState<any>(false);
@@ -49,8 +50,9 @@ export function Header(props: { loading: boolean, setLoading: (loading: boolean)
   }, [userToken]);
 
   const logoutUser = async () => {
-    await logout();
+    logout();
     setUserToken(null);
+    navigate("/");
   };
 
   return (
@@ -116,23 +118,23 @@ export function Header(props: { loading: boolean, setLoading: (loading: boolean)
           ) : null}
           {userToken?.user?.role === "Admin" ? (
             <>
-              <Link to="/manage-couriers">
+              <Link to="/couriers/manage">
                 <Navbar.Link
-                  active={matchPath(pathname, "/manage-couriers") ? true : false}
+                  active={matchPath(pathname, "/couriers/manage") ? true : false}
                 >
                   Couriers
                 </Navbar.Link>
               </Link>
-              <Link to="/manage-parcels">
+              <Link to="/parcels/manage">
                 <Navbar.Link
-                  active={matchPath(pathname, "/manage-parcels") ? true : false}
+                  active={matchPath(pathname, "/parcels/manage") ? true : false}
                 >
                   Parcels
                 </Navbar.Link>
               </Link>
-              <Link to="/manage-cars">
+              <Link to="/cars/manage">
                 <Navbar.Link
-                  active={matchPath(pathname, "/manage-cars") ? true : false}
+                  active={matchPath(pathname, "/cars/manage") ? true : false}
                 >
                   Cars
                 </Navbar.Link>
@@ -141,7 +143,7 @@ export function Header(props: { loading: boolean, setLoading: (loading: boolean)
           ) : null}
         </Navbar.Collapse>
       </Navbar>
-      <Login show={showLoginModal} setShow={setShowLoginModal} />
+      <LoginModal show={showLoginModal} setShow={setShowLoginModal} />
     </>
   );
 }

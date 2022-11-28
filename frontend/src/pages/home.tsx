@@ -11,7 +11,7 @@ export default function Home() {
       <div className="container mx-auto px-4">
         <Header loading={loading} setLoading={setLoading} />
         <h1 className="mb-2 text-3xl font-bold text-gray-900 dark:text-white">
-          Home
+          Track Your Parcel
         </h1>
         <p>
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam quia

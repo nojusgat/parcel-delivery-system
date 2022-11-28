@@ -2,8 +2,9 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { RolesAuthRoute } from "./utils/others";
 import React, { Suspense } from "react";
 import { Loader } from "./components/loader";
-import Parcels from "./pages/parcels";
-import ManageParcels from "./pages/manageParcels";
+import Parcels from "./pages/parcels/parcels";
+import ManageParcels from "./pages/parcels/manage";
+import Register from "./pages/register";
 
 const Home = React.lazy(() => import("./pages/home"));
 const Deliveries = React.lazy(() => import("./pages/deliveries"));
@@ -14,6 +15,14 @@ export function App() {
       <Suspense fallback={<Loader />}>
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route
+            path="/register"
+            element={
+              <RolesAuthRoute role={null}>
+                <Register />
+              </RolesAuthRoute>
+            }
+          />
           <Route
             path="/deliveries"
             element={
@@ -31,7 +40,7 @@ export function App() {
             }
           />
           <Route
-            path="/manage-couriers"
+            path="/couriers/manage"
             element={
               <RolesAuthRoute role="Admin">
                 <Home />
@@ -39,7 +48,7 @@ export function App() {
             }
           />
           <Route
-            path="/manage-parcels"
+            path="/parcels/manage"
             element={
               <RolesAuthRoute role="Admin">
                 <ManageParcels />
@@ -47,7 +56,7 @@ export function App() {
             }
           />
           <Route
-            path="/manage-cars"
+            path="/cars/manage"
             element={
               <RolesAuthRoute role="Admin">
                 <Home />

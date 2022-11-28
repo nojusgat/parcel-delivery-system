@@ -1,18 +1,19 @@
-import { Table, Pagination, Badge, Button, Tooltip } from "flowbite-react";
+import { Table, Pagination, Badge, Button } from "flowbite-react";
 import React from "react";
-import { Header } from "../components/header";
-import { Footer } from "../components/footer";
-import { getParcels } from "../utils/api";
-import { Loader } from "../components/loader";
+import { Header } from "../../components/header";
+import { Footer } from "../../components/footer";
+import { getParcels } from "../../utils/api";
+import { Loader } from "../../components/loader";
+import { useNavigate } from "react-router-dom";
 
-import { BsPencil, BsTrash, BsPlusLg } from "react-icons/bs";
-
-export default function ManageParcels() {
+export default function Parcels() {
   const [page, setPage] = React.useState(1);
   const [parcels, setParcels] = React.useState<any>(null);
 
   const [loadingHeader, setLoadingHeader] = React.useState(true);
   const [loadingParcels, setLoadingParcels] = React.useState(true);
+
+  const navigate = useNavigate();
 
   React.useEffect(() => {
     getParcels(page)
@@ -28,16 +29,9 @@ export default function ManageParcels() {
     setPage(page);
   };
 
-  const createParcel = () => {
-    console.log("create parcel");
-  };
-
-  const editParcel = (id: string) => {
-    console.log(id);
-  };
-
-  const deleteParcel = (id: string) => {
-    console.log(id);
+  const setToDeliver = (id: string) => {
+    localStorage.setItem("parcelId", id);
+    navigate("/deliveries");
   };
 
   return (
@@ -45,17 +39,9 @@ export default function ManageParcels() {
       {loadingHeader || loadingParcels ? <Loader /> : null}
       <div className="container mx-auto px-4">
         <Header loading={loadingHeader} setLoading={setLoadingHeader} />
-        <div className="flex flex-wrap gap-2 mb-2">
-          <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
-            Parcels
-          </h1>
-          <Tooltip content="Create a new Parcel">
-            <Button size="sm" onClick={createParcel}>
-              <BsPlusLg className="h-4 w-4" />
-            </Button>
-          </Tooltip>
-        </div>
-
+        <h1 className="mb-2 text-3xl font-bold text-gray-900 dark:text-white">
+          Parcels
+        </h1>
         <Table>
           <Table.Head>
             <Table.HeadCell>#</Table.HeadCell>
@@ -65,7 +51,7 @@ export default function ManageParcels() {
             <Table.HeadCell>Price</Table.HeadCell>
             <Table.HeadCell>Status</Table.HeadCell>
             <Table.HeadCell>
-              <span className="sr-only">Actions</span>
+              <span className="sr-only">Deliver</span>
             </Table.HeadCell>
           </Table.Head>
           <Table.Body className="divide-y">
@@ -109,25 +95,12 @@ export default function ManageParcels() {
                   </span>
                 </Table.Cell>
                 <Table.Cell>
-                  <span className="flex flex-wrap gap-2">
-                    <Tooltip content="Edit Parcel">
-                      <Button
-                        size="sm"
-                        onClick={() => editParcel(parcel.parcelNumber)}
-                      >
-                        <BsPencil className="h-4 w-4" />
-                      </Button>
-                    </Tooltip>
-                    <Tooltip content="Delete Parcel">
-                      <Button
-                        size="sm"
-                        color="failure"
-                        onClick={() => deleteParcel(parcel.parcelNumber)}
-                      >
-                        <BsTrash className="h-4 w-4" />
-                      </Button>
-                    </Tooltip>
-                  </span>
+                  {parcel.status === "Pending" ||
+                  parcel.status === "In progress" ? (
+                    <Button onClick={() => setToDeliver(parcel.parcelNumber)}>
+                      Deliver
+                    </Button>
+                  ) : null}
                 </Table.Cell>
               </Table.Row>
             ))}

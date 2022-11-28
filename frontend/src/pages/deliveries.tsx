@@ -12,6 +12,7 @@ import { FiPhoneCall } from "react-icons/fi";
 import { AiOutlineWarning } from "react-icons/ai";
 import { Alert, Badge, Button, Spinner } from "flowbite-react";
 import { Link } from "react-router-dom";
+import { ConfirmModal } from "../components/confirmModal";
 
 export default function Deliveries() {
   const [loadingHeader, setLoadingHeader] = React.useState(true);
@@ -19,6 +20,9 @@ export default function Deliveries() {
   const [loadingParcel, setLoadingParcel] = React.useState(true);
   const [parcel, setParcel] = React.useState<any>(null);
   const [location, setLocation] = React.useState<any>(null);
+
+  const [showFinishDeliveryModal, setShowFinishDeliveryModal] =
+    React.useState(false);
 
   const [loadingChangeStatus, setLoadingChangeStatus] = React.useState(false);
 
@@ -178,12 +182,26 @@ export default function Deliveries() {
                       Loading ...
                     </Button>
                   ) : (
-                    <Button
-                      color="success"
-                      onClick={() => changeStatus("Delivered")}
-                    >
-                      Finish delivery
-                    </Button>
+                    <>
+                      <Button
+                        color="success"
+                        onClick={() => setShowFinishDeliveryModal(true)}
+                      >
+                        Finish delivery
+                      </Button>
+
+                      <ConfirmModal
+                        show={showFinishDeliveryModal}
+                        setShow={setShowFinishDeliveryModal}
+                        onConfirm={() => changeStatus("Delivered")}
+                        message={
+                          "Are you sure you have finished this delivery?"
+                        }
+                        confirmText={"Yes, I have"}
+                        cancelText={"No, cancel"}
+                        confirmColor="success"
+                      />
+                    </>
                   )
                 ) : (
                   <Alert color="warning" rounded={true} icon={AiOutlineWarning}>

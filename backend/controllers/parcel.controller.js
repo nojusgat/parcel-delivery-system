@@ -205,7 +205,7 @@ exports.findOne = async (req, res) => {
 
     if(req.user != null) {
         const courier = await Couriers.findOne({
-            where: { id: id, userId: req.user.id },
+            where: { userId: req.user.id },
             attributes: ['id']
         });
     

@@ -20,11 +20,20 @@ export function AssignUserToCourierModal(props: AssignUserToCourierModalProps) {
   const [page, setPage] = React.useState(1);
   const [users, setUsers] = React.useState<any>(null);
 
-  React.useEffect(() => {
-    getUsers(page, 5, "&unassigned=true").then((res) => {
-      setUsers(res?.data);
-    });
-  }, [page, props.toggleRender]);
+  const [isLoading, setIsLoading] = React.useState(true);
+
+  React.useMemo(() => {
+    if (props.show === false) return;
+    setIsLoading(true);
+    getUsers(page, 5, "&unassigned=true")
+      .then((res) => {
+        setUsers(res?.data);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [page, props.toggleRender, props.show]);
 
   const onPageChange = (page: number) => {
     setPage(page);
@@ -42,7 +51,11 @@ export function AssignUserToCourierModal(props: AssignUserToCourierModalProps) {
                 {props.courier?.firstname} {props.courier?.lastname}
               </span>
             </h3>
-            {users?.results?.length > 0 ? (
+            {isLoading ? (
+              <div className="flex justify-center">
+                <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-blue-700"></div>
+              </div>
+            ) : users?.results?.length > 0 ? (
               <>
                 <Table>
                   <Table.Head>

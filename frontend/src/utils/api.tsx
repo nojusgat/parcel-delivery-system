@@ -29,7 +29,7 @@ export const register = async (
 export const logout = async () => {
   const token = getUserInfo()?.token;
   saveUserInfo(null);
-  if (!token) return;
+  if (!token) return Promise.reject();
 
   await api.get("/auth/logout", {
     headers: {
@@ -40,7 +40,7 @@ export const logout = async () => {
 
 export const getProfile = async () => {
   const token = getUserInfo()?.token;
-  if (!token) return null;
+  if (!token) return Promise.reject();
 
   const res = await api.get("/auth/me", {
     headers: {
@@ -50,7 +50,7 @@ export const getProfile = async () => {
 
   if (res.status === 401) {
     saveUserInfo(null);
-    return null;
+    return Promise.reject();
   }
 
   return res;
@@ -70,7 +70,7 @@ export const getUsers = async (
 
   if (res.status === 401) {
     saveUserInfo(null);
-    return null;
+    return Promise.reject();
   }
 
   return res;
@@ -86,7 +86,7 @@ export const createCar = async (data: any) => {
 
   if (res.status === 401) {
     saveUserInfo(null);
-    return null;
+    return Promise.reject();
   }
 
   return res;
@@ -102,7 +102,7 @@ export const updateCar = async (carId: number, data: any) => {
 
   if (res.status === 401) {
     saveUserInfo(null);
-    return null;
+    return Promise.reject();
   }
 
   return res;
@@ -118,7 +118,7 @@ export const deleteCar = async (carId: number) => {
 
   if (res.status === 401) {
     saveUserInfo(null);
-    return null;
+    return Promise.reject();
   }
 
   return res;
@@ -134,7 +134,7 @@ export const getCar = async (carId: number) => {
 
   if (res.status === 401) {
     saveUserInfo(null);
-    return null;
+    return Promise.reject();
   }
 
   return res;
@@ -144,7 +144,7 @@ export const getCarPersonal = async () => {
   const token = getUserInfo()?.token;
   const carId = getUserInfo()?.courier?.carId;
 
-  if (!carId || !token) return null;
+  if (!carId || !token) return Promise.reject();
 
   const res = await api.get(`/cars/${carId}`, {
     headers: {
@@ -154,7 +154,7 @@ export const getCarPersonal = async () => {
 
   if (res.status === 401) {
     saveUserInfo(null);
-    return null;
+    return Promise.reject();
   }
 
   return res;
@@ -174,7 +174,7 @@ export const getCars = async (
 
   if (res.status === 401) {
     saveUserInfo(null);
-    return null;
+    return Promise.reject();
   }
 
   return res;
@@ -190,7 +190,7 @@ export const createParcel = async (data: any) => {
 
   if (res.status === 401) {
     saveUserInfo(null);
-    return null;
+    return Promise.reject();
   }
 
   return res;
@@ -206,7 +206,7 @@ export const updateParcel = async (parcelId: string, data: any) => {
 
   if (res.status === 401) {
     saveUserInfo(null);
-    return null;
+    return Promise.reject();
   }
 
   return res;
@@ -222,7 +222,7 @@ export const deleteParcel = async (parcelId: string) => {
 
   if (res.status === 401) {
     saveUserInfo(null);
-    return null;
+    return Promise.reject();
   }
 
   return res;
@@ -238,7 +238,7 @@ export const getParcel = async (parcelId: string) => {
 
   if (res.status === 401) {
     saveUserInfo(null);
-    return null;
+    return Promise.reject();
   }
 
   return res;
@@ -258,7 +258,7 @@ export const getParcels = async (
 
   if (res.status === 401) {
     saveUserInfo(null);
-    return null;
+    return Promise.reject();
   }
 
   return res;
@@ -281,7 +281,7 @@ export const getParcelsForCourier = async (
 
   if (res.status === 401) {
     saveUserInfo(null);
-    return null;
+    return Promise.reject();
   }
 
   return res;
@@ -304,7 +304,7 @@ export const getParcelsForCar = async (
 
   if (res.status === 401) {
     saveUserInfo(null);
-    return null;
+    return Promise.reject();
   }
 
   return res;
@@ -320,7 +320,7 @@ export const createCourier = async (data: any) => {
 
   if (res.status === 401) {
     saveUserInfo(null);
-    return null;
+    return Promise.reject();
   }
 
   return res;
@@ -336,7 +336,7 @@ export const updateCourier = async (courierId: number, data: any) => {
 
   if (res.status === 401) {
     saveUserInfo(null);
-    return null;
+    return Promise.reject();
   }
 
   return res;
@@ -352,7 +352,7 @@ export const deleteCourier = async (courierId: number) => {
 
   if (res.status === 401) {
     saveUserInfo(null);
-    return null;
+    return Promise.reject();
   }
 
   return res;
@@ -368,7 +368,7 @@ export const getCourier = async (courierId: number) => {
 
   if (res.status === 401) {
     saveUserInfo(null);
-    return null;
+    return Promise.reject();
   }
 
   return res;
@@ -384,7 +384,7 @@ export const getCouriers = async (page: number, perPage: number = 10) => {
 
   if (res.status === 401) {
     saveUserInfo(null);
-    return null;
+    return Promise.reject();
   }
 
   return res;

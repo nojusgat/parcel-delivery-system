@@ -23,11 +23,20 @@ export function AssignCourierToParcelModal(
   const [page, setPage] = React.useState(1);
   const [couriers, setCouriers] = React.useState<any>(null);
 
-  React.useEffect(() => {
-    getCouriers(page, 5).then((res) => {
-      setCouriers(res?.data);
-    });
-  }, [page, props.toggleRender]);
+  const [isLoading, setIsLoading] = React.useState(true);
+
+  React.useMemo(() => {
+    if (props.show === false) return;
+    setIsLoading(true);
+    getCouriers(page, 5)
+      .then((res) => {
+        setCouriers(res?.data);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [page, props.toggleRender, props.show]);
 
   const onPageChange = (page: number) => {
     setPage(page);
@@ -45,7 +54,11 @@ export function AssignCourierToParcelModal(
                 {props.parcel?.parcelNumber}
               </span>
             </h3>
-            {couriers?.results?.length > 0 ? (
+            {isLoading ? (
+              <div className="flex justify-center">
+                <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-blue-700"></div>
+              </div>
+            ) : couriers?.results?.length > 0 ? (
               <>
                 <Table>
                   <Table.Head>

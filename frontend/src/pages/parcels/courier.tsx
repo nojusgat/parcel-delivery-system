@@ -82,7 +82,7 @@ export default function ManageParcelsCourier() {
                 </Table.HeadCell>
               </Table.Head>
               <Table.Body className="divide-y">
-                {parcels?.results.length > 0 ? (
+                {parcels != null && parcels?.results?.length > 0 ? (
                   parcels?.results.map((parcel: any) => (
                     <ParcelDetails
                       key={parcel.parcelNumber}
@@ -97,14 +97,14 @@ export default function ManageParcelsCourier() {
                   ))
                 ) : (
                   <tr>
-                    <td colSpan={7} className="text-center">
+                    <td colSpan={6} className="text-center">
                       No parcels found
                     </td>
                   </tr>
                 )}
               </Table.Body>
             </Table>
-            {parcels?.total_pages > 1 ? (
+            {parcels != null && parcels?.total_pages > 1 ? (
               <Pagination
                 currentPage={page}
                 onPageChange={onPageChange}

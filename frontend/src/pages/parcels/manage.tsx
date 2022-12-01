@@ -23,7 +23,14 @@ export default function ManageParcels() {
   React.useEffect(() => {
     getParcels(page)
       .then((res) => {
-        setParcels(res?.data);
+        if (res.status === 200) {
+          setParcels(res?.data);
+        } else {
+          throw new Error();
+        }
+      })
+      .catch((err) => {
+        setParcels(null);
       })
       .finally(() => {
         setLoadingParcels(false);
@@ -67,21 +74,29 @@ export default function ManageParcels() {
             </Table.HeadCell>
           </Table.Head>
           <Table.Body className="divide-y">
-            {parcels?.results.map((parcel: any) => (
-              <ParcelDetails
-                key={parcel.parcelNumber}
-                parcelData={parcel}
-                toggleRender={toggleRender}
-                setToggleRender={setToggleRender}
-                showCourier={true}
-                showEditDeleteBtn={true}
-                showDeliverBtn={undefined}
-                showAssignBtn={undefined}
-              />
-            ))}
+            {parcels != null && parcels?.results?.length > 0 ? (
+              parcels?.results.map((parcel: any) => (
+                <ParcelDetails
+                  key={parcel.parcelNumber}
+                  parcelData={parcel}
+                  toggleRender={toggleRender}
+                  setToggleRender={setToggleRender}
+                  showCourier={true}
+                  showEditDeleteBtn={true}
+                  showDeliverBtn={undefined}
+                  showAssignBtn={undefined}
+                />
+              ))
+            ) : (
+              <tr>
+                <td colSpan={7} className="text-center">
+                  No parcels found
+                </td>
+              </tr>
+            )}
           </Table.Body>
         </Table>
-        {parcels?.total_pages > 1 ? (
+        {parcels != null && parcels?.total_pages > 1 ? (
           <Pagination
             currentPage={page}
             onPageChange={onPageChange}

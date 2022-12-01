@@ -57,6 +57,7 @@ export function Header(props: {
   const logoutUser = async () => {
     logout();
     setUserToken(null);
+    localStorage.removeItem("parcelId");
     navigate("/");
   };
 

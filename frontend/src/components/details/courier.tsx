@@ -152,11 +152,11 @@ export function CourierDetails({
           </a>
         </Table.Cell>
         {showUser ? (
-          <>
-            <Table.Cell>
-              {courier.user ? (
-                <span>{courier.user?.username}</span>
-              ) : (
+          <Table.Cell>
+            {courier.user ? (
+              <span>{courier.user?.username}</span>
+            ) : (
+              <>
                 <Tooltip content="Click to assign">
                   <b
                     className="cursor-pointer"
@@ -165,24 +165,24 @@ export function CourierDetails({
                     None
                   </b>
                 </Tooltip>
-              )}
-            </Table.Cell>
-            <AssignUserToCourierModal
-              show={showAssignModal1}
-              setShow={setShowAssignModal1}
-              courier={courier}
-              setCourier={setCourier}
-              toggleRender={toggleRender}
-              setToggleRender={setToggleRender}
-            />
-          </>
+                <AssignUserToCourierModal
+                  show={showAssignModal1}
+                  setShow={setShowAssignModal1}
+                  courier={courier}
+                  setCourier={setCourier}
+                  toggleRender={toggleRender}
+                  setToggleRender={setToggleRender}
+                />
+              </>
+            )}
+          </Table.Cell>
         ) : null}
         {showCar ? (
-          <>
-            <Table.Cell>
-              {courier.car ? (
-                <span>{courier.car?.licensePlate}</span>
-              ) : (
+          <Table.Cell>
+            {courier.car ? (
+              <span>{courier.car?.licensePlate}</span>
+            ) : (
+              <>
                 <Tooltip content="Click to assign">
                   <b
                     className="cursor-pointer"
@@ -191,17 +191,17 @@ export function CourierDetails({
                     None
                   </b>
                 </Tooltip>
-              )}
-            </Table.Cell>
-            <AssignCarToCourierModal
-              show={showAssignModal2}
-              setShow={setShowAssignModal2}
-              courier={courier}
-              setCourier={setCourier}
-              setToggleRender={setToggleRender}
-              toggleRender={toggleRender}
-            />
-          </>
+                <AssignCarToCourierModal
+                  show={showAssignModal2}
+                  setShow={setShowAssignModal2}
+                  courier={courier}
+                  setCourier={setCourier}
+                  setToggleRender={setToggleRender}
+                  toggleRender={toggleRender}
+                />
+              </>
+            )}
+          </Table.Cell>
         ) : null}
         {showEditDeleteBtn ? (
           <Table.Cell>

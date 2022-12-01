@@ -13,6 +13,9 @@ export default function CurrentCar(props: {
       .then((res) => {
         setCurrentCar(res?.data);
       })
+      .catch((err) => {
+        setCurrentCar(null);
+      })
       .finally(() => {
         props.setLoading(false);
       });

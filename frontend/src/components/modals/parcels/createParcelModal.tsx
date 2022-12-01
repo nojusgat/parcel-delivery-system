@@ -7,7 +7,7 @@ import {
   TextInput,
 } from "flowbite-react";
 import React from "react";
-import { createParcel } from "../../utils/api";
+import { createParcel } from "../../../utils/api";
 
 interface CreateParcelModalProps {
   show: boolean;

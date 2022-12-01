@@ -2,10 +2,10 @@ import { Table, Badge, Button, Tooltip, Spinner } from "flowbite-react";
 import React from "react";
 import { BsJournalMinus, BsPencil, BsTrash } from "react-icons/bs";
 import { Link, useNavigate } from "react-router-dom";
-import { ConfirmModal } from "./modals/confirmModal";
-import { deleteParcel as apiDeleteParcel, updateParcel } from "../utils/api";
-import { EditParcelModal } from "./modals/editParcelModal";
-import { AssignCourierToParcelModal } from "./modals/assignCourierToParcelModal";
+import { ConfirmModal } from "../modals/confirmModal";
+import { deleteParcel as apiDeleteParcel, updateParcel } from "../../utils/api";
+import { EditParcelModal } from "../modals/parcels/editParcelModal";
+import { AssignCourierToParcelModal } from "../modals/parcels/assignCourierToParcelModal";
 
 interface ParcelDetailsProps {
   parcelData: any;
@@ -210,7 +210,7 @@ export function ParcelDetails({
                     onClick={showUnassignParcelModal}
                     disabled={parcel.courier === null}
                   >
-                    <Tooltip content="Unassign Parcel">
+                    <Tooltip content="Unassign Courier">
                       <BsJournalMinus className="h-4 w-4" />
                     </Tooltip>
                   </Button>
@@ -256,7 +256,7 @@ export function ParcelDetails({
             show={showUnassignModal}
             setShow={setShowUnassignModal}
             onConfirm={unassignParcel}
-            message={`Are you sure you want to unassign ${parcel.parcelNumber} parcel?`}
+            message={`Are you sure you want to unassign courier from ${parcel.parcelNumber} parcel?`}
             confirmText={"Yes, I'm sure"}
             cancelText={"No, cancel"}
             confirmColor="purple"

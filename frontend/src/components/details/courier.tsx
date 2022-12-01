@@ -1,13 +1,14 @@
 import { Table, Button, Tooltip, Spinner } from "flowbite-react";
 import React from "react";
 import { BsJournalMinus, BsPencil, BsTrash } from "react-icons/bs";
-import { ConfirmModal } from "./modals/confirmModal";
+import { ConfirmModal } from "../modals/confirmModal";
 import {
   deleteCourier as apiDeleteCourier,
   updateCourier,
   updateParcel,
-} from "../utils/api";
-import { EditCourierModal } from "./modals/editCourierModal";
+} from "../../utils/api";
+import { EditCourierModal } from "../modals/couriers/editCourierModal";
+import { AssignCarToCourierModal } from "../modals/couriers/assignCarToCourierModal";
 
 interface CourierDetailsProps {
   courierData: any;
@@ -34,8 +35,12 @@ export function CourierDetails({
 }: CourierDetailsProps) {
   const [showDeleteModal, setShowDeleteModal] = React.useState(false);
   const [showEditModal, setShowEditModal] = React.useState(false);
+
   const [showUnassignModal1, setShowUnassignModal1] = React.useState(false);
   const [showUnassignModal2, setShowUnassignModal2] = React.useState(false);
+
+  const [showAssignModal1, setShowAssignModal1] = React.useState(false);
+  const [showAssignModal2, setShowAssignModal2] = React.useState(false);
 
   const [loadingDelete, setLoadingDelete] = React.useState(false);
   const [loadingAssign, setLoadingAssign] = React.useState(false);
@@ -146,26 +151,43 @@ export function CourierDetails({
           </a>
         </Table.Cell>
         {showUser ? (
-          <Table.Cell>
-            {courier.user ? (
-              <span>{courier.user?.username}</span>
-            ) : (
-              <Tooltip content="Click to assign">
-                <b className="cursor-pointer">None</b>
-              </Tooltip>
-            )}
-          </Table.Cell>
+          <>
+            <Table.Cell>
+              {courier.user ? (
+                <span>{courier.user?.username}</span>
+              ) : (
+                <Tooltip content="Click to assign">
+                  <b className="cursor-pointer">None</b>
+                </Tooltip>
+              )}
+            </Table.Cell>
+          </>
         ) : null}
         {showCar ? (
-          <Table.Cell>
-            {courier.car ? (
-              <span>{courier.car?.licensePlate}</span>
-            ) : (
-              <Tooltip content="Click to assign">
-                <b className="cursor-pointer">None</b>
-              </Tooltip>
-            )}
-          </Table.Cell>
+          <>
+            <Table.Cell>
+              {courier.car ? (
+                <span>{courier.car?.licensePlate}</span>
+              ) : (
+                <Tooltip content="Click to assign">
+                  <b
+                    className="cursor-pointer"
+                    onClick={() => setShowAssignModal2(true)}
+                  >
+                    None
+                  </b>
+                </Tooltip>
+              )}
+            </Table.Cell>
+            <AssignCarToCourierModal
+              show={showAssignModal2}
+              setShow={setShowAssignModal2}
+              courier={courier}
+              setCourier={setCourier}
+              setToggleRender={setToggleRender}
+              toggleRender={toggleRender}
+            />
+          </>
         ) : null}
         {showEditDeleteBtn ? (
           <Table.Cell>

@@ -1,32 +1,43 @@
 import { Button, Label, Modal, Spinner, TextInput } from "flowbite-react";
 import React from "react";
-import { createCourier } from "../../utils/api";
+import { updateCar } from "../../../utils/api";
 
-interface CreateCourierModalProps {
+interface EditCarModalProps {
   show: boolean;
   setShow: (show: boolean) => void;
-  toggleRender: boolean;
-  setToggleRender: (toggleRender: boolean) => void;
+  car: any;
+  setCar: (car: any) => void;
 }
 
-export function CreateCourierModal(props: CreateCourierModalProps) {
+export function EditCarModal(props: EditCarModalProps) {
   const close = () => {
+    setMake(props.car.make);
+    setModel(props.car.model);
+    setLicensePlate(props.car.licensePlate);
     props.setShow(false);
   };
 
-  const [firstname, setFirstname] = React.useState("");
-  const [lastname, setLastname] = React.useState("");
-  const [phone, setPhone] = React.useState("");
+  const [make, setMake] = React.useState(props.car.make);
+  const [model, setModel] = React.useState(props.car.model);
+  const [licensePlate, setLicensePlate] = React.useState(
+    props.car.licensePlate
+  );
 
   const [loading, setLoading] = React.useState(false);
+
+  React.useEffect(() => {
+    setMake(props.car.make);
+    setModel(props.car.model);
+    setLicensePlate(props.car.licensePlate);
+  }, [props.car]);
 
   const onSubmit = (e: any) => {
     e.preventDefault();
     setLoading(true);
-    createCourier({ firstname, lastname, phone })
+    updateCar(props.car.id, { make, model, licensePlate })
       .then((res) => {
-        if (res?.status === 201) {
-          props.setToggleRender(!props.toggleRender);
+        if (res?.status === 200) {
+          props.setCar(res.data);
         }
       })
       .finally(() => {
@@ -42,45 +53,46 @@ export function CreateCourierModal(props: CreateCourierModalProps) {
         <Modal.Body>
           <div className="space-y-6 px-6 pb-4 sm:pb-6 lg:px-8 xl:pb-8">
             <h3 className="text-xl font-medium text-gray-900 dark:text-white">
-              Create Courier
+              Edit Car{" "}
+              <span className="text-blue-700">
+                {props.car.make} {props.car.model}
+              </span>
             </h3>
             <form onSubmit={onSubmit}>
               <div className="grid grid-cols-1 gap-3 md:grid-cols-2 mb-5">
                 <div>
                   <div className="mb-2 block">
-                    <Label htmlFor="firstname" value="Firstname" />
+                    <Label htmlFor="make" value="Make" />
                   </div>
                   <TextInput
-                    id="firstname"
+                    id="make"
                     required={true}
-                    value={firstname}
-                    onChange={(e) => setFirstname(e.target.value)}
+                    value={make}
+                    onChange={(e) => setMake(e.target.value)}
                   />
                 </div>
                 <div>
                   <div className="mb-2 block">
-                    <Label htmlFor="lastname" value="Lastname" />
+                    <Label htmlFor="model" value="Model" />
                   </div>
                   <TextInput
-                    id="lastname"
+                    id="model"
                     required={true}
-                    value={lastname}
-                    onChange={(e) => setLastname(e.target.value)}
+                    value={model}
+                    onChange={(e) => setModel(e.target.value)}
                   />
                 </div>
               </div>
-              <div className="grid grid-cols-1 gap-3 md:grid-cols-2 mb-5">
+              <div className="grid grid-cols-1 mb-5">
                 <div>
                   <div className="mb-2 block">
-                    <Label htmlFor="phone" value="Phone number" />
+                    <Label htmlFor="licensePlate" value="License Plate" />
                   </div>
                   <TextInput
-                    id="phone"
-                    type="tel"
-                    pattern="(86[0-9]{7}|\+3706[0-9]{7})"
+                    id="licensePlate"
                     required={true}
-                    value={phone}
-                    onChange={(e) => setPhone(e.target.value)}
+                    value={licensePlate}
+                    onChange={(e) => setLicensePlate(e.target.value)}
                   />
                 </div>
               </div>
@@ -88,7 +100,7 @@ export function CreateCourierModal(props: CreateCourierModalProps) {
                 {loading ? (
                   <Button type="submit" disabled={true}>
                     <Spinner className="w-5 h-5 mr-3 -ml-1" />
-                    <span>Creating...</span>
+                    <span>Updating...</span>
                   </Button>
                 ) : (
                   <Button type="submit">Submit</Button>

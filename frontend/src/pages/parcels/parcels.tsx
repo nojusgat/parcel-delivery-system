@@ -4,7 +4,7 @@ import { Header } from "../../components/header";
 import { Footer } from "../../components/footer";
 import { getParcels } from "../../utils/api";
 import { Loader } from "../../components/loader";
-import { ParcelDetails } from "../../components/parcelDetails";
+import { ParcelDetails } from "../../components/details/parcel";
 
 export default function Parcels() {
   const [page, setPage] = React.useState(1);

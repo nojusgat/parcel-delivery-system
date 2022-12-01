@@ -6,8 +6,8 @@ import { getCouriers } from "../../utils/api";
 import { Loader } from "../../components/loader";
 
 import { BsPlusLg } from "react-icons/bs";
-import { CourierDetails } from "../../components/courierDetails";
-import { CreateCourierModal } from "../../components/modals/createCourierModal";
+import { CourierDetails } from "../../components/details/courier";
+import { CreateCourierModal } from "../../components/modals/couriers/createCourierModal";
 
 export default function ManageCouriers() {
   const [toggleRender, setToggleRender] = React.useState(false);

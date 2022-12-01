@@ -6,7 +6,7 @@ import { getCourier, getParcelsForCourier } from "../../utils/api";
 import { Loader } from "../../components/loader";
 
 import { MdAssignment } from "react-icons/md";
-import { ParcelDetails } from "../../components/parcelDetails";
+import { ParcelDetails } from "../../components/details/parcel";
 import { useParams } from "react-router-dom";
 import { AssignParcelModal } from "../../components/modals/assignParcelModal";
 

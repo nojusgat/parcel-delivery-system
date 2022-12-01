@@ -6,8 +6,8 @@ import { getParcels } from "../../utils/api";
 import { Loader } from "../../components/loader";
 
 import { BsPlusLg } from "react-icons/bs";
-import { ParcelDetails } from "../../components/parcelDetails";
-import { CreateParcelModal } from "../../components/modals/createParcelModal";
+import { ParcelDetails } from "../../components/details/parcel";
+import { CreateParcelModal } from "../../components/modals/parcels/createParcelModal";
 
 export default function ManageParcels() {
   const [toggleRender, setToggleRender] = React.useState(false);

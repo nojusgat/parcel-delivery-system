@@ -6,13 +6,13 @@ import {
   TextInput,
 } from "flowbite-react";
 import React from "react";
-import { updateCourier } from "../../utils/api";
+import { updateCourier } from "../../../utils/api";
 
 interface EditCourierModalProps {
   show: boolean;
   setShow: (show: boolean) => void;
   courier: any;
-  setCourier: (parcel: any) => void;
+  setCourier: (courier: any) => void;
 }
 
 export function EditCourierModal(props: EditCourierModalProps) {
@@ -87,7 +87,7 @@ export function EditCourierModal(props: EditCourierModalProps) {
                   />
                 </div>
               </div>
-              <div className="grid grid-cols-1 gap-3 md:grid-cols-2 mb-5">
+              <div className="grid grid-cols-1 mb-5">
                 <div>
                   <div className="mb-2 block">
                     <Label htmlFor="phone" value="Phone number" />

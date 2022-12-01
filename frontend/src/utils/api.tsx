@@ -54,6 +54,70 @@ export const getProfile = async () => {
   return res;
 };
 
+export const createCar = async (data: any) => {
+  const token = getUserInfo()?.token;
+  const res = await api.post(`/cars`, data, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  if (res.status === 401) {
+    saveUserInfo(null);
+    return null;
+  }
+
+  return res;
+};
+
+export const updateCar = async (carId: number, data: any) => {
+  const token = getUserInfo()?.token;
+  const res = await api.put(`/cars/${carId}`, data, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  if (res.status === 401) {
+    saveUserInfo(null);
+    return null;
+  }
+
+  return res;
+};
+
+export const deleteCar = async (carId: number) => {
+  const token = getUserInfo()?.token;
+  const res = await api.delete(`/cars/${carId}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  if (res.status === 401) {
+    saveUserInfo(null);
+    return null;
+  }
+
+  return res;
+};
+
+export const getCar = async (carId: number) => {
+  const token = getUserInfo()?.token;
+  const res = await api.get(`/cars/${carId}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  if (res.status === 401) {
+    saveUserInfo(null);
+    return null;
+  }
+
+  return res;
+};
+
 export const getCarPersonal = async () => {
   const token = getUserInfo()?.token;
   const carId = getUserInfo()?.courier?.carId;
@@ -74,9 +138,13 @@ export const getCarPersonal = async () => {
   return res;
 };
 
-export const getCar = async (carId: number) => {
+export const getCars = async (
+  page: number,
+  perPage: number = 10,
+  extra = ""
+) => {
   const token = getUserInfo()?.token;
-  const res = await api.get(`/cars/${carId}`, {
+  const res = await api.get(`/cars?page=${page}&size=${perPage}${extra}`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -154,7 +222,11 @@ export const getParcel = async (parcelId: string) => {
   return res;
 };
 
-export const getParcels = async (page: number, perPage: number = 10, extra = "") => {
+export const getParcels = async (
+  page: number,
+  perPage: number = 10,
+  extra = ""
+) => {
   const token = getUserInfo()?.token;
   const res = await api.get(`/parcels?page=${page}&size=${perPage}${extra}`, {
     headers: {
@@ -170,13 +242,20 @@ export const getParcels = async (page: number, perPage: number = 10, extra = "")
   return res;
 };
 
-export const getParcelsForCourier = async (courierId: number, page: number, perPage: number = 10) => {
+export const getParcelsForCourier = async (
+  courierId: number,
+  page: number,
+  perPage: number = 10
+) => {
   const token = getUserInfo()?.token;
-  const res = await api.get(`/couriers/${courierId}/parcels?page=${page}&size=${perPage}`, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
+  const res = await api.get(
+    `/couriers/${courierId}/parcels?page=${page}&size=${perPage}`,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
 
   if (res.status === 401) {
     saveUserInfo(null);

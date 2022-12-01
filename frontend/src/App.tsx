@@ -5,10 +5,11 @@ import { Loader } from "./components/loader";
 import Parcels from "./pages/parcels/parcels";
 import ManageParcels from "./pages/parcels/manage";
 import Register from "./pages/register";
-import ManageParcelsCourier from "./pages/parcels/couriers";
+import ManageParcelsCourier from "./pages/parcels/courier";
 import Home from "./pages/home";
 import Deliveries from "./pages/deliveries";
 import ManageCouriers from "./pages/couriers/manage";
+import ManageCars from "./pages/cars/manage";
 
 export function App() {
   return (
@@ -68,7 +69,7 @@ export function App() {
             path="/cars/manage"
             element={
               <RolesAuthRoute role="Admin">
-                <Home />
+                <ManageCars />
               </RolesAuthRoute>
             }
           />

@@ -1,29 +1,31 @@
 import { Modal, Pagination, Table } from "flowbite-react";
 import React from "react";
 import { Link } from "react-router-dom";
-import { getParcels } from "../../utils/api";
-import { ParcelDetails } from "../details/parcel";
+import { getCouriers } from "../../../utils/api";
+import { CourierDetails } from "../../details/courier";
 
-interface AssignParcelModalProps {
+interface AssignCourierToParcelModalProps {
   show: boolean;
   setShow: (show: boolean) => void;
-  courier: any;
-  setCourier: (parcel: any) => void;
-  toggleRender: boolean;
-  setToggleRender: (toggleRender: boolean) => void;
+  parcel: any;
+  setParcel: (parcel: any) => void;
+  toggleRender: boolean | undefined;
+  setToggleRender: ((toggleRender: boolean) => void) | undefined;
 }
 
-export function AssignParcelModal(props: AssignParcelModalProps) {
+export function AssignCourierToParcelModal(
+  props: AssignCourierToParcelModalProps
+) {
   const close = () => {
     props.setShow(false);
   };
 
   const [page, setPage] = React.useState(1);
-  const [parcels, setParcels] = React.useState<any>(null);
+  const [couriers, setCouriers] = React.useState<any>(null);
 
   React.useEffect(() => {
-    getParcels(page, 5, "&unassigned=true").then((res) => {
-      setParcels(res?.data);
+    getCouriers(page, 5).then((res) => {
+      setCouriers(res?.data);
     });
   }, [page, props.toggleRender]);
 
@@ -38,53 +40,53 @@ export function AssignParcelModal(props: AssignParcelModalProps) {
         <Modal.Body>
           <div className="space-y-6 px-6 pb-4 sm:pb-6 lg:px-8 xl:pb-8">
             <h3 className="text-xl font-medium text-gray-900 dark:text-white">
-              Assign Parcel to Courier{" "}
+              Assign Courier to Parcel{" "}
               <span className="text-blue-700">
-                {props.courier?.firstname} {props.courier?.lastname}
+                {props.parcel?.parcelNumber}
               </span>
             </h3>
-            {parcels?.results?.length > 0 ? (
+            {couriers?.results?.length > 0 ? (
               <>
                 <Table>
                   <Table.Head>
-                    <Table.HeadCell>#</Table.HeadCell>
-                    <Table.HeadCell>Sender</Table.HeadCell>
-                    <Table.HeadCell>Receiver</Table.HeadCell>
-                    <Table.HeadCell>Weight</Table.HeadCell>
-                    <Table.HeadCell>Price</Table.HeadCell>
+                    <Table.HeadCell>Firstname</Table.HeadCell>
+                    <Table.HeadCell>Lastname</Table.HeadCell>
+                    <Table.HeadCell>Phone</Table.HeadCell>
                     <Table.HeadCell>
                       <span className="sr-only">Actions</span>
                     </Table.HeadCell>
                   </Table.Head>
                   <Table.Body className="divide-y">
-                    {parcels?.results.map((parcel: any) => (
-                      <ParcelDetails
-                        key={parcel.parcelNumber}
-                        parcelData={parcel}
-                        showAssignBtn={props.courier?.id}
+                    {couriers?.results.map((courier: any) => (
+                      <CourierDetails
+                        key={courier.id}
+                        courierData={courier}
+                        setParcel={props.setParcel}
                         toggleRender={props.toggleRender}
                         setToggleRender={props.setToggleRender}
+                        showAssignParcelBtn={props.parcel?.parcelNumber}
+                        setModalOpen={props.setShow}
                         showEditDeleteBtn={undefined}
-                        showCourier={undefined}
-                        showDeliverBtn={undefined}
+                        showUser={undefined}
+                        showCar={undefined}
                       />
                     ))}
                   </Table.Body>
                 </Table>
-                {parcels?.total_pages > 1 ? (
+                {couriers?.total_pages > 1 ? (
                   <Pagination
                     currentPage={page}
                     onPageChange={onPageChange}
                     showIcons={true}
-                    totalPages={parcels?.total_pages || 1}
+                    totalPages={couriers?.total_pages || 1}
                   />
                 ) : null}
               </>
             ) : (
               <div className="text-center">
                 <h3 className="text-lg font-medium text-gray-900 dark:text-white">
-                  No parcels to assign, please{" "}
-                  <Link to="/parcels/manage" className="hover:underline">
+                  No couriers to assign, please{" "}
+                  <Link to="/couriers/manage" className="hover:underline">
                     Add a new one
                   </Link>
                 </h3>

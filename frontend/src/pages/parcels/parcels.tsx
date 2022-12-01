@@ -52,6 +52,13 @@ export default function Parcels() {
                 key={parcel.parcelNumber}
                 parcelData={parcel}
                 showDeliverBtn={true}
+                toggleRender={false}
+                setToggleRender={function (toggleRender: boolean): void {
+                  throw new Error("Function not implemented.");
+                }}
+                showEditDeleteBtn={undefined}
+                showCourier={undefined}
+                showAssignBtn={undefined}
               />
             ))}
           </Table.Body>

@@ -9,8 +9,8 @@ interface AssignCourierToParcelModalProps {
   setShow: (show: boolean) => void;
   parcel: any;
   setParcel: (parcel: any) => void;
-  toggleRender: boolean;
-  setToggleRender: (toggleRender: boolean) => void;
+  toggleRender: boolean | undefined;
+  setToggleRender: ((toggleRender: boolean) => void) | undefined;
 }
 
 export function AssignCourierToParcelModal(
@@ -66,6 +66,9 @@ export function AssignCourierToParcelModal(
                         setToggleRender={props.setToggleRender}
                         showAssignParcelBtn={props.parcel?.parcelNumber}
                         setModalOpen={props.setShow}
+                        showEditDeleteBtn={undefined}
+                        showUser={undefined}
+                        showCar={undefined}
                       />
                     ))}
                   </Table.Body>

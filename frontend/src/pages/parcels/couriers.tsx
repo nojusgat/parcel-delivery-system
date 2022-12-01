@@ -90,6 +90,9 @@ export default function ManageParcelsCourier() {
                       toggleRender={toggleRender}
                       setToggleRender={setToggleRender}
                       showEditDeleteBtn={true}
+                      showCourier={undefined}
+                      showDeliverBtn={undefined}
+                      showAssignBtn={undefined}
                     />
                   ))
                 ) : (

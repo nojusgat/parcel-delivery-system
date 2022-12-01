@@ -17,7 +17,8 @@ export default function ManageParcels() {
   const [loadingHeader, setLoadingHeader] = React.useState(true);
   const [loadingParcels, setLoadingParcels] = React.useState(true);
 
-  const [showCreateParcelModal, setShowCreateParcelModal] = React.useState(false);
+  const [showCreateParcelModal, setShowCreateParcelModal] =
+    React.useState(false);
 
   React.useEffect(() => {
     getParcels(page)
@@ -74,6 +75,8 @@ export default function ManageParcels() {
                 setToggleRender={setToggleRender}
                 showCourier={true}
                 showEditDeleteBtn={true}
+                showDeliverBtn={undefined}
+                showAssignBtn={undefined}
               />
             ))}
           </Table.Body>

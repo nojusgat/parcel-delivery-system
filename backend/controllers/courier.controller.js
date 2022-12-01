@@ -127,7 +127,7 @@ exports.update = async (req, res) => {
         return;
     }
 
-    if ("carId" in req.body) {
+    if ("carId" in req.body && req.body.carId != null) {
         const carExists = await Cars.count({ where: { id: req.body.carId } }) > 0;
         if (!carExists) {
             res.status(400).send({
@@ -137,7 +137,7 @@ exports.update = async (req, res) => {
         }
     }
 
-    if ("userId" in req.body) {
+    if ("userId" in req.body && req.body.userId != null) {
         const userExists = await Users.count({ where: { id: req.body.userId } }) > 0;
         if (!userExists) {
             res.status(400).send({

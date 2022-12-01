@@ -7,15 +7,25 @@ import { deleteParcel as apiDeleteParcel, updateParcel } from "../utils/api";
 import { EditParcelModal } from "./modals/editParcelModal";
 import { AssignCourierToParcelModal } from "./modals/assignCourierToParcelModal";
 
+interface ParcelDetailsProps {
+  parcelData: any;
+  toggleRender: boolean | undefined;
+  setToggleRender: ((toggleRender: boolean) => void) | undefined;
+  showEditDeleteBtn: boolean | undefined;
+  showCourier: boolean | undefined;
+  showDeliverBtn: boolean | undefined;
+  showAssignBtn: number | undefined;
+}
+
 export function ParcelDetails({
   parcelData,
   toggleRender,
   setToggleRender,
-  showEditDeleteBtn = false,
-  showCourier = false,
-  showDeliverBtn = false,
-  showAssignBtn = false,
-}: any) {
+  showEditDeleteBtn,
+  showCourier,
+  showDeliverBtn,
+  showAssignBtn,
+}: ParcelDetailsProps) {
   const [showDeleteModal, setShowDeleteModal] = React.useState(false);
   const [showEditModal, setShowEditModal] = React.useState(false);
   const [showUnassignModal, setShowUnassignModal] = React.useState(false);
@@ -50,7 +60,7 @@ export function ParcelDetails({
     apiDeleteParcel(parcel.parcelNumber)
       .then((res) => {
         if (res?.status === 204) {
-          setToggleRender(!toggleRender);
+          if (setToggleRender !== undefined) setToggleRender(!toggleRender);
         }
       })
       .finally(() => {
@@ -69,7 +79,7 @@ export function ParcelDetails({
         }
       })
       .finally(() => {
-        setToggleRender(!toggleRender);
+        if (setToggleRender !== undefined) setToggleRender(!toggleRender);
         setLoadingAssign(false);
       });
   };
@@ -90,7 +100,7 @@ export function ParcelDetails({
         }
       })
       .finally(() => {
-        setToggleRender(!toggleRender);
+        if (setToggleRender !== undefined) setToggleRender(!toggleRender);
         setLoadingAssign(false);
       });
   };

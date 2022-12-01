@@ -7,23 +7,40 @@ import {
   updateCourier,
   updateParcel,
 } from "../utils/api";
+import { EditCourierModal } from "./modals/editCourierModal";
+
+interface CourierDetailsProps {
+  courierData: any;
+  toggleRender: boolean | undefined;
+  setToggleRender: ((toggleRender: boolean) => void) | undefined;
+  showEditDeleteBtn: boolean | undefined;
+  showUser: boolean | undefined;
+  showCar: boolean | undefined;
+  showAssignParcelBtn: string | undefined;
+  setModalOpen: ((modelOpen: boolean) => void) | undefined;
+  setParcel: ((parcel: any) => void) | undefined;
+}
 
 export function CourierDetails({
   courierData,
   toggleRender,
   setToggleRender,
-  showEditDeleteBtn = false,
-  showUser = false,
-  showCar = false,
-  showAssignParcelBtn = false,
-  setModalOpen = () => {},
-  setParcel = () => {},
-}: any) {
+  showEditDeleteBtn,
+  showUser,
+  showCar,
+  showAssignParcelBtn,
+  setModalOpen,
+  setParcel,
+}: CourierDetailsProps) {
   const [showDeleteModal, setShowDeleteModal] = React.useState(false);
   const [showEditModal, setShowEditModal] = React.useState(false);
-  const [showUnassignModal, setShowUnassignModal] = React.useState(false);
+  const [showUnassignModal1, setShowUnassignModal1] = React.useState(false);
+  const [showUnassignModal2, setShowUnassignModal2] = React.useState(false);
+
   const [loadingDelete, setLoadingDelete] = React.useState(false);
   const [loadingAssign, setLoadingAssign] = React.useState(false);
+  const [loadingAssign1, setLoadingAssign1] = React.useState(false);
+  const [loadingAssign2, setLoadingAssign2] = React.useState(false);
 
   const [courier, setCourier] = React.useState<any>(courierData);
 
@@ -39,7 +56,12 @@ export function CourierDetails({
 
   const showUnassignUserModal = () => {
     if (!showEditDeleteBtn) return;
-    setShowUnassignModal(true);
+    setShowUnassignModal1(true);
+  };
+
+  const showUnassignCarModal = () => {
+    if (!showEditDeleteBtn) return;
+    setShowUnassignModal2(true);
   };
 
   const deleteCourier = () => {
@@ -49,7 +71,7 @@ export function CourierDetails({
     apiDeleteCourier(courier.id)
       .then((res) => {
         if (res?.status === 204) {
-          setToggleRender(!toggleRender);
+          if (setToggleRender !== undefined) setToggleRender(!toggleRender);
         }
       })
       .finally(() => {
@@ -59,8 +81,8 @@ export function CourierDetails({
 
   const unassignUser = () => {
     if (!showEditDeleteBtn) return;
-    setShowUnassignModal(false);
-    setLoadingAssign(true);
+    setShowUnassignModal1(false);
+    setLoadingAssign1(true);
     updateCourier(courier.id, { userId: null })
       .then((res) => {
         if (res?.status === 200) {
@@ -68,8 +90,24 @@ export function CourierDetails({
         }
       })
       .finally(() => {
-        setToggleRender(!toggleRender);
-        setLoadingAssign(false);
+        if (setToggleRender !== undefined) setToggleRender(!toggleRender);
+        setLoadingAssign1(false);
+      });
+  };
+
+  const unassignCar = () => {
+    if (!showEditDeleteBtn) return;
+    setShowUnassignModal2(false);
+    setLoadingAssign2(true);
+    updateCourier(courier.id, { carId: null })
+      .then((res) => {
+        if (res?.status === 200) {
+          setCourier(res.data);
+        }
+      })
+      .finally(() => {
+        if (setToggleRender !== undefined) setToggleRender(!toggleRender);
+        setLoadingAssign2(false);
       });
   };
 
@@ -80,9 +118,9 @@ export function CourierDetails({
     updateParcel(showAssignParcelBtn, { courierId: courier.id })
       .then((res) => {
         if (res?.status === 200) {
-          setParcel(res.data);
-          setToggleRender(!toggleRender);
-          setModalOpen(false);
+          if (setParcel !== undefined) setParcel(res.data);
+          if (setToggleRender !== undefined) setToggleRender(!toggleRender);
+          if (setModalOpen !== undefined) setModalOpen(false);
         }
       })
       .finally(() => {
@@ -110,7 +148,7 @@ export function CourierDetails({
         {showUser ? (
           <Table.Cell>
             {courier.user ? (
-              <span>should_be_user_info</span>
+              <span>{courier.user?.username}</span>
             ) : (
               <Tooltip content="Click to assign">
                 <b className="cursor-pointer">None</b>
@@ -121,7 +159,7 @@ export function CourierDetails({
         {showCar ? (
           <Table.Cell>
             {courier.car ? (
-              <span>should_be_car_info</span>
+              <span>{courier.car?.licensePlate}</span>
             ) : (
               <Tooltip content="Click to assign">
                 <b className="cursor-pointer">None</b>
@@ -153,7 +191,7 @@ export function CourierDetails({
                     </Tooltip>
                   </Button>
                 )}
-                {loadingAssign ? (
+                {loadingAssign1 ? (
                   <Button size="sm" color="purple">
                     <Spinner size="sm" className="h-4 w-4" light={true} />
                   </Button>
@@ -169,7 +207,7 @@ export function CourierDetails({
                     </Tooltip>
                   </Button>
                 )}
-                {loadingAssign ? (
+                {loadingAssign2 ? (
                   <Button size="sm" color="dark">
                     <Spinner size="sm" className="h-4 w-4" light={true} />
                   </Button>
@@ -177,7 +215,7 @@ export function CourierDetails({
                   <Button
                     size="sm"
                     color="dark"
-                    onClick={showUnassignUserModal}
+                    onClick={showUnassignCarModal}
                     disabled={courier.car == null}
                   >
                     <Tooltip content="Unassign Car">
@@ -216,20 +254,29 @@ export function CourierDetails({
             cancelText={"No, cancel"}
           />
           <ConfirmModal
-            show={showUnassignModal}
-            setShow={setShowUnassignModal}
+            show={showUnassignModal1}
+            setShow={setShowUnassignModal1}
             onConfirm={unassignUser}
             message={`Are you sure you want to unassign user from courier ${courier.firstname} ${courier.lastname}?`}
             confirmText={"Yes, I'm sure"}
             cancelText={"No, cancel"}
             confirmColor="purple"
           />
-          {/* <EditParcelModal
+          <ConfirmModal
+            show={showUnassignModal2}
+            setShow={setShowUnassignModal2}
+            onConfirm={unassignCar}
+            message={`Are you sure you want to unassign car from courier ${courier.firstname} ${courier.lastname}?`}
+            confirmText={"Yes, I'm sure"}
+            cancelText={"No, cancel"}
+            confirmColor="dark"
+          />
+          <EditCourierModal
             show={showEditModal}
             setShow={setShowEditModal}
-            parcel={courier}
-            setParcel={setCourier}
-          /> */}
+            courier={courier}
+            setCourier={setCourier}
+          />
         </>
       ) : null}
     </>

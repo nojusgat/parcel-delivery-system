@@ -64,6 +64,9 @@ export function AssignParcelModal(props: AssignParcelModalProps) {
                         showAssignBtn={props.courier?.id}
                         toggleRender={props.toggleRender}
                         setToggleRender={props.setToggleRender}
+                        showEditDeleteBtn={undefined}
+                        showCourier={undefined}
+                        showDeliverBtn={undefined}
                       />
                     ))}
                   </Table.Body>
@@ -81,7 +84,9 @@ export function AssignParcelModal(props: AssignParcelModalProps) {
               <div className="text-center">
                 <h3 className="text-lg font-medium text-gray-900 dark:text-white">
                   No parcels to assign, please{" "}
-                  <Link to="/parcels/manage" className="hover:underline">Add a new one</Link>
+                  <Link to="/parcels/manage" className="hover:underline">
+                    Add a new one
+                  </Link>
                 </h3>
               </div>
             )}

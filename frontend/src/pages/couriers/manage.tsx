@@ -7,6 +7,7 @@ import { Loader } from "../../components/loader";
 
 import { BsPlusLg } from "react-icons/bs";
 import { CourierDetails } from "../../components/courierDetails";
+import { CreateCourierModal } from "../../components/modals/createCourierModal";
 
 export default function ManageCouriers() {
   const [toggleRender, setToggleRender] = React.useState(false);
@@ -16,7 +17,8 @@ export default function ManageCouriers() {
   const [loadingHeader, setLoadingHeader] = React.useState(true);
   const [loadingCouriers, setLoadingCouriers] = React.useState(true);
 
-  const [showCreateCourierModal, setShowCreateCourierModal] = React.useState(false);
+  const [showCreateCourierModal, setShowCreateCourierModal] =
+    React.useState(false);
 
   React.useEffect(() => {
     getCouriers(page)
@@ -73,6 +75,9 @@ export default function ManageCouriers() {
                 showUser={true}
                 showCar={true}
                 showEditDeleteBtn={true}
+                showAssignParcelBtn={undefined}
+                setModalOpen={undefined}
+                setParcel={undefined}
               />
             ))}
           </Table.Body>
@@ -85,12 +90,12 @@ export default function ManageCouriers() {
             totalPages={couriers?.total_pages || 1}
           />
         ) : null}
-        {/* <CreateParcelModal
-          toggleRender={toggleRender}
-          setToggleRender={setToggleRender}
+        <CreateCourierModal
           show={showCreateCourierModal}
           setShow={setShowCreateCourierModal}
-        /> */}
+          toggleRender={toggleRender}
+          setToggleRender={setToggleRender}
+        />
         <Footer />
       </div>
     </>

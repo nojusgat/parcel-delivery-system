@@ -50,11 +50,11 @@ export function CreateParcelModal(props: CreateParcelModalProps) {
       .then((res) => {
         if (res?.status === 201) {
           props.setToggleRender(!props.toggleRender);
-          close();
         }
       })
       .finally(() => {
         setLoading(false);
+        close();
       });
   };
 

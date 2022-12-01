@@ -169,9 +169,12 @@ exports.findAllByCars = (req, res) => {
                 model: Couriers,
                 as: "courier",
                 where: { carId: id },
-                attributes: []
+                attributes: ['id', 'firstname', 'lastname']
             }
-        ]
+        ],
+        attributes: {
+            exclude: ['courierId']
+        }
     })
         .then(data => {
             if (data.count == 0) {

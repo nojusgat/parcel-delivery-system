@@ -10,6 +10,7 @@ import Home from "./pages/home";
 import Deliveries from "./pages/deliveries";
 import ManageCouriers from "./pages/couriers/manage";
 import ManageCars from "./pages/cars/manage";
+import ManageParcelsCar from "./pages/cars/parcels";
 
 export function App() {
   return (
@@ -58,10 +59,18 @@ export function App() {
             }
           />
           <Route
-            path="/parcels/manage/couriers/:courierId"
+            path="/couriers/:courierId/parcels/manage"
             element={
               <RolesAuthRoute role="Admin">
                 <ManageParcelsCourier />
+              </RolesAuthRoute>
+            }
+          />
+          <Route
+            path="/cars/:carId/parcels/manage"
+            element={
+              <RolesAuthRoute role="Admin">
+                <ManageParcelsCar />
               </RolesAuthRoute>
             }
           />

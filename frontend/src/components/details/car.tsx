@@ -1,9 +1,11 @@
 import { Table, Button, Tooltip, Spinner } from "flowbite-react";
 import React from "react";
 import { BsPencil, BsTrash } from "react-icons/bs";
+import { AiOutlineEye } from "react-icons/ai";
 import { ConfirmModal } from "../modals/confirmModal";
 import { deleteCar, updateCourier } from "../../utils/api";
 import { EditCarModal } from "../modals/cars/editCarModal";
+import { useNavigate } from "react-router-dom";
 
 interface CarDetailsProps {
   carData: any;
@@ -31,6 +33,8 @@ export function CarDetails({
   const [loadingAssign, setLoadingAssign] = React.useState(false);
 
   const [car, setCar] = React.useState<any>(carData);
+
+  const navigate = useNavigate();
 
   const edit = () => {
     if (!showEditDeleteBtn) return;
@@ -112,6 +116,15 @@ export function CarDetails({
                     </Tooltip>
                   </Button>
                 )}
+                <Button
+                  size="sm"
+                  color="purple"
+                  onClick={() => navigate(`/cars/${car.id}/parcels/manage`)}
+                >
+                  <Tooltip content="View Parcels">
+                    <AiOutlineEye className="h-4 w-4" />
+                  </Tooltip>
+                </Button>
               </Button.Group>
             </span>
           </Table.Cell>

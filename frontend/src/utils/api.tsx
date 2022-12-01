@@ -265,6 +265,29 @@ export const getParcelsForCourier = async (
   return res;
 };
 
+export const getParcelsForCar = async (
+  carId: number,
+  page: number,
+  perPage: number = 10
+) => {
+  const token = getUserInfo()?.token;
+  const res = await api.get(
+    `/cars/${carId}/parcels?page=${page}&size=${perPage}`,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+
+  if (res.status === 401) {
+    saveUserInfo(null);
+    return null;
+  }
+
+  return res;
+};
+
 export const createCourier = async (data: any) => {
   const token = getUserInfo()?.token;
   const res = await api.post(`/couriers`, data, {

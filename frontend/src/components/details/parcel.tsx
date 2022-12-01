@@ -133,7 +133,7 @@ export function ParcelDetails({
             {parcel.courier ? (
               <Tooltip content="View courier parcels">
                 <Link
-                  to={"/parcels/manage/couriers/" + parcel.courier?.id}
+                  to={`/couriers/${parcel.courier?.id}/parcels/manage`}
                   className="hover:underline"
                 >
                   {parcel.courier?.firstname + " " + parcel.courier?.lastname}

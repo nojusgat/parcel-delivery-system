@@ -39,7 +39,7 @@ export function CourierDetails({
   const [showUnassignModal1, setShowUnassignModal1] = React.useState(false);
   const [showUnassignModal2, setShowUnassignModal2] = React.useState(false);
 
-  const [showAssignModal1, setShowAssignModal1] = React.useState(false);
+  // const [showAssignModal1, setShowAssignModal1] = React.useState(false);
   const [showAssignModal2, setShowAssignModal2] = React.useState(false);
 
   const [loadingDelete, setLoadingDelete] = React.useState(false);

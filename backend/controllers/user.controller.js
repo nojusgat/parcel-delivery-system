@@ -88,7 +88,7 @@ exports.findAll = (req, res) => {
 
     let where = {};
     if(unassigned != null && unassigned == 'true') {
-        where.id = { [Op.notIn]: db.Sequelize.literal("(SELECT userId FROM couriers)") };
+        where.id = { [Op.notIn]: db.Sequelize.literal("(SELECT userId FROM couriers WHERE userId IS NOT NULL)") };
     }
 
     const { limit, offset } = getPagination(page, size);

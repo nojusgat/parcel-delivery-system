@@ -9,6 +9,7 @@ import {
 } from "../../utils/api";
 import { EditCourierModal } from "../modals/couriers/editCourierModal";
 import { AssignCarToCourierModal } from "../modals/couriers/assignCarToCourierModal";
+import { AssignUserToCourierModal } from "../modals/couriers/assignUserToCourierModal";
 
 interface CourierDetailsProps {
   courierData: any;
@@ -39,7 +40,7 @@ export function CourierDetails({
   const [showUnassignModal1, setShowUnassignModal1] = React.useState(false);
   const [showUnassignModal2, setShowUnassignModal2] = React.useState(false);
 
-  // const [showAssignModal1, setShowAssignModal1] = React.useState(false);
+  const [showAssignModal1, setShowAssignModal1] = React.useState(false);
   const [showAssignModal2, setShowAssignModal2] = React.useState(false);
 
   const [loadingDelete, setLoadingDelete] = React.useState(false);
@@ -157,10 +158,23 @@ export function CourierDetails({
                 <span>{courier.user?.username}</span>
               ) : (
                 <Tooltip content="Click to assign">
-                  <b className="cursor-pointer">None</b>
+                  <b
+                    className="cursor-pointer"
+                    onClick={() => setShowAssignModal1(true)}
+                  >
+                    None
+                  </b>
                 </Tooltip>
               )}
             </Table.Cell>
+            <AssignUserToCourierModal
+              show={showAssignModal1}
+              setShow={setShowAssignModal1}
+              courier={courier}
+              setCourier={setCourier}
+              toggleRender={toggleRender}
+              setToggleRender={setToggleRender}
+            />
           </>
         ) : null}
         {showCar ? (

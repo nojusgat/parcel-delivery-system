@@ -6,7 +6,7 @@ const cors = require("cors");
 const app = express();
 
 var corsOptions = {
-  origin: "http://localhost:3000" // frontend url
+  origin: "https://nojusgat.github.io" // frontend url
 };
 
 app.use(cors(corsOptions));

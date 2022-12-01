@@ -8,6 +8,7 @@ import Register from "./pages/register";
 import ManageParcelsCourier from "./pages/parcels/couriers";
 import Home from "./pages/home";
 import Deliveries from "./pages/deliveries";
+import ManageCouriers from "./pages/couriers/manage";
 
 export function App() {
   return (
@@ -43,7 +44,7 @@ export function App() {
             path="/couriers/manage"
             element={
               <RolesAuthRoute role="Admin">
-                <Home />
+                <ManageCouriers />
               </RolesAuthRoute>
             }
           />

@@ -5,6 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { ConfirmModal } from "./modals/confirmModal";
 import { deleteParcel as apiDeleteParcel, updateParcel } from "../utils/api";
 import { EditParcelModal } from "./modals/editParcelModal";
+import { AssignCourierToParcelModal } from "./modals/assignCourierToParcelModal";
 
 export function ParcelDetails({
   parcelData,
@@ -18,6 +19,8 @@ export function ParcelDetails({
   const [showDeleteModal, setShowDeleteModal] = React.useState(false);
   const [showEditModal, setShowEditModal] = React.useState(false);
   const [showUnassignModal, setShowUnassignModal] = React.useState(false);
+  const [showAssignCourierModal, setShowAssignCourierModal] =
+    React.useState(false);
   const [loadingDelete, setLoadingDelete] = React.useState(false);
   const [loadingAssign, setLoadingAssign] = React.useState(false);
 
@@ -127,9 +130,24 @@ export function ParcelDetails({
                 </Link>
               </Tooltip>
             ) : (
-              <Tooltip content="Click to assign">
-                <b className="cursor-pointer">None</b>
-              </Tooltip>
+              <>
+                <Tooltip content="Click to assign">
+                  <b
+                    className="cursor-pointer"
+                    onClick={() => setShowAssignCourierModal(true)}
+                  >
+                    None
+                  </b>
+                </Tooltip>
+                <AssignCourierToParcelModal
+                  show={showAssignCourierModal}
+                  setShow={setShowAssignCourierModal}
+                  parcel={parcel}
+                  toggleRender={toggleRender}
+                  setToggleRender={setToggleRender}
+                  setParcel={setParcel}
+                />
+              </>
             )}
           </Table.Cell>
         ) : null}

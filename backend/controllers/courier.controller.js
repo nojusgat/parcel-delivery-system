@@ -48,7 +48,12 @@ exports.findAll = (req, res) => {
 
     const { limit, offset } = getPagination(page, size);
 
-    Couriers.findAndCountAll({ limit, offset })
+    Couriers.findAndCountAll({
+        limit,
+        offset,
+        include: [{ model: Cars, as: "car", attributes: ['id', 'licensePlate'] }, { model: Users, as: "user", attributes: ['id', 'username', 'email'] }],
+        attributes: { exclude: ['carId', 'userId'] },
+    })
         .then(data => {
             if (data.count == 0) {
                 res.status(200).send({

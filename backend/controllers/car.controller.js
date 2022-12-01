@@ -47,7 +47,7 @@ exports.findAll = (req, res) => {
     Cars.findAndCountAll({ limit, offset })
         .then(data => {
             if (data.count == 0) {
-                res.status(200).send({
+                res.status(204).send({
                     message: "Cars were not found."
                 });
             } else {

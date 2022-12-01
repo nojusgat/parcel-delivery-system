@@ -5,6 +5,8 @@ const api = axios.create({
   baseURL: "https://parcel-delivery-system-ng.herokuapp.com/api",
 });
 
+const defaultPageLimit = 10;
+
 export const login = async (username: string, password: string) => {
   return await api.post("/auth/login", {
     username,
@@ -41,6 +43,26 @@ export const getProfile = async () => {
   if (!token) return null;
 
   const res = await api.get("/auth/me", {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  if (res.status === 401) {
+    saveUserInfo(null);
+    return null;
+  }
+
+  return res;
+};
+
+export const getUsers = async (
+  page: number,
+  perPage: number = defaultPageLimit,
+  extra = ""
+) => {
+  const token = getUserInfo()?.token;
+  const res = await api.get(`/users?page=${page}&size=${perPage}${extra}`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -140,7 +162,7 @@ export const getCarPersonal = async () => {
 
 export const getCars = async (
   page: number,
-  perPage: number = 10,
+  perPage: number = defaultPageLimit,
   extra = ""
 ) => {
   const token = getUserInfo()?.token;
@@ -224,7 +246,7 @@ export const getParcel = async (parcelId: string) => {
 
 export const getParcels = async (
   page: number,
-  perPage: number = 10,
+  perPage: number = defaultPageLimit,
   extra = ""
 ) => {
   const token = getUserInfo()?.token;
@@ -245,7 +267,7 @@ export const getParcels = async (
 export const getParcelsForCourier = async (
   courierId: number,
   page: number,
-  perPage: number = 10
+  perPage: number = defaultPageLimit
 ) => {
   const token = getUserInfo()?.token;
   const res = await api.get(
@@ -268,7 +290,7 @@ export const getParcelsForCourier = async (
 export const getParcelsForCar = async (
   carId: number,
   page: number,
-  perPage: number = 10
+  perPage: number = defaultPageLimit
 ) => {
   const token = getUserInfo()?.token;
   const res = await api.get(

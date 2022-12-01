@@ -75,7 +75,7 @@ exports.findAll = async (req, res) => {
     }})
         .then(data => {
             if (data.count == 0) {
-                res.status(200).send({
+                res.status(204).send({
                     message: "Parcels were not found."
                 });
             } else {

@@ -130,11 +130,11 @@ Returns a list of all parcels with the current page, total pages and result coun
 
 ### Resource Information
 
-|  |  |
-|--|--|
-| Response formats | JSON |
-| Requires authentication? | Yes |
-| Response codes | 200, 204, 400, 401, 403 |
+<table>
+  <tr><td>Response formats</td><td>JSON</td></tr>
+  <tr><td>Requires authentication?</td><td>Yes</td></tr>
+  <tr><td>Response codes</td><td>200, 204, 400, 401, 403</td></tr>
+</table>
 
 
 ###  Parameters
@@ -184,11 +184,11 @@ Creates a new parcel. Only accessible for authenticated administrator.
 
 ### Resource Information
 
-|  |  |
-|--|--|
-| Response formats | JSON |
-| Requires authentication? | Yes |
-| Response codes | 201, 400, 401, 403 |
+<table>
+  <tr><td>Response formats</td><td>JSON</td></tr>
+  <tr><td>Requires authentication?</td><td>Yes</td></tr>
+  <tr><td>Response codes</td><td>201, 400, 401, 403</td></tr>
+</table>
 
 
 ###  Parameters
@@ -258,11 +258,11 @@ Returns the specified parcel.
 
 ### Resource Information
 
-|  |  |
-|--|--|
-| Response formats | JSON |
-| Requires authentication? | No |
-| Response codes | 200, 400 |
+<table>
+  <tr><td>Response formats</td><td>JSON</td></tr>
+  <tr><td>Requires authentication?</td><td>No</td></tr>
+  <tr><td>Response codes</td><td>200, 400</td></tr>
+</table>
 
 
 ###  Parameters
@@ -314,11 +314,11 @@ Updates a specified parcel. Only accessible for authenticated administrator and 
 
 ### Resource Information
 
-|  |  |
-|--|--|
-| Response formats | JSON |
-| Requires authentication? | Yes |
-| Response codes | 200, 400, 401, 403 |
+<table>
+  <tr><td>Response formats</td><td>JSON</td></tr>
+  <tr><td>Requires authentication?</td><td>Yes</td></tr>
+  <tr><td>Response codes</td><td>200, 400, 401, 403</td></tr>
+</table>
 
 
 ###  Parameters
@@ -382,11 +382,11 @@ Deletes a specified parcel. Only accessible for authenticated administrator.
 
 ### Resource Information
 
-|  |  |
-|--|--|
-| Response formats | JSON |
-| Requires authentication? | Yes |
-| Response codes | 204, 400, 401, 403 |
+<table>
+  <tr><td>Response formats</td><td>JSON</td></tr>
+  <tr><td>Requires authentication?</td><td>Yes</td></tr>
+  <tr><td>Response codes</td><td>204, 400, 401, 403</td></tr>
+</table>
 
 
 ###  Parameters
@@ -427,11 +427,11 @@ Returns a list of all couriers with the current page, total pages and result cou
 
 ### Resource Information
 
-|  |  |
-|--|--|
-| Response formats | JSON |
-| Requires authentication? | Yes |
-| Response codes | 200, 204, 400, 401, 403 |
+<table>
+  <tr><td>Response formats</td><td>JSON</td></tr>
+  <tr><td>Requires authentication?</td><td>Yes</td></tr>
+  <tr><td>Response codes</td><td>200, 204, 400, 401, 403</td></tr>
+</table>
 
 
 ###  Parameters
@@ -480,11 +480,11 @@ Returns a list of all parcels for a specified courier with the current page, tot
 
 ### Resource Information
 
-|  |  |
-|--|--|
-| Response formats | JSON |
-| Requires authentication? | Yes |
-| Response codes | 200, 400, 401, 403 |
+<table>
+  <tr><td>Response formats</td><td>JSON</td></tr>
+  <tr><td>Requires authentication?</td><td>Yes</td></tr>
+  <tr><td>Response codes</td><td>200, 400, 401, 403</td></tr>
+</table>
 
 
 ###  Parameters
@@ -534,11 +534,11 @@ Creates a new courier. Only accessible for authenticated administrator.
 
 ### Resource Information
 
-|  |  |
-|--|--|
-| Response formats | JSON |
-| Requires authentication? | Yes |
-| Response codes | 201, 400, 401, 403 |
+<table>
+  <tr><td>Response formats</td><td>JSON</td></tr>
+  <tr><td>Requires authentication?</td><td>Yes</td></tr>
+  <tr><td>Response codes</td><td>201, 400, 401, 403</td></tr>
+</table>
 
 
 ###  Parameters
@@ -592,11 +592,11 @@ Returns the specified courier. Only accessible for authenticated administrator.
 
 ### Resource Information
 
-|  |  |
-|--|--|
-| Response formats | JSON |
-| Requires authentication? | Yes |
-| Response codes | 200, 400, 401, 403 |
+<table>
+  <tr><td>Response formats</td><td>JSON</td></tr>
+  <tr><td>Requires authentication?</td><td>Yes</td></tr>
+  <tr><td>Response codes</td><td>200, 400, 401, 403</td></tr>
+</table>
 
 
 ###  Parameters
@@ -645,11 +645,11 @@ Updates a specified courier. Only accessible for authenticated administrator.
 
 ### Resource Information
 
-|  |  |
-|--|--|
-| Response formats | JSON |
-| Requires authentication? | Yes |
-| Response codes | 200, 400, 401, 403 |
+<table>
+  <tr><td>Response formats</td><td>JSON</td></tr>
+  <tr><td>Requires authentication?</td><td>Yes</td></tr>
+  <tr><td>Response codes</td><td>200, 400, 401, 403</td></tr>
+</table>
 
 
 ###  Parameters
@@ -706,11 +706,11 @@ Deletes a specified courier. Only accessible for authenticated administrator.
 
 ### Resource Information
 
-|  |  |
-|--|--|
-| Response formats | JSON |
-| Requires authentication? | Yes |
-| Response codes | 204, 400, 401, 403 |
+<table>
+  <tr><td>Response formats</td><td>JSON</td></tr>
+  <tr><td>Requires authentication?</td><td>Yes</td></tr>
+  <tr><td>Response codes</td><td>204, 400, 401, 403</td></tr>
+</table>
 
 
 ###  Parameters
@@ -751,11 +751,11 @@ Returns a list of all cars with the current page, total pages and result count. 
 
 ### Resource Information
 
-|  |  |
-|--|--|
-| Response formats | JSON |
-| Requires authentication? | Yes |
-| Response codes | 200, 204, 400, 401, 403 |
+<table>
+  <tr><td>Response formats</td><td>JSON</td></tr>
+  <tr><td>Requires authentication?</td><td>Yes</td></tr>
+  <tr><td>Response codes</td><td>200, 204, 400, 401, 403</td></tr>
+</table>
 
 
 ###  Parameters
@@ -804,11 +804,11 @@ Returns a list of all parcels for a specified car with the current page, total p
 
 ### Resource Information
 
-|  |  |
-|--|--|
-| Response formats | JSON |
-| Requires authentication? | Yes |
-| Response codes | 200, 400, 401, 403 |
+<table>
+  <tr><td>Response formats</td><td>JSON</td></tr>
+  <tr><td>Requires authentication?</td><td>Yes</td></tr>
+  <tr><td>Response codes</td><td>200, 400, 401, 403</td></tr>
+</table>
 
 
 ###  Parameters
@@ -858,11 +858,11 @@ Creates a new car. Only accessible for authenticated administrator.
 
 ### Resource Information
 
-|  |  |
-|--|--|
-| Response formats | JSON |
-| Requires authentication? | Yes |
-| Response codes | 201, 400, 401, 403 |
+<table>
+  <tr><td>Response formats</td><td>JSON</td></tr>
+  <tr><td>Requires authentication?</td><td>Yes</td></tr>
+  <tr><td>Response codes</td><td>201, 400, 401, 403</td></tr>
+</table>
 
 
 ###  Parameters
@@ -911,11 +911,11 @@ Returns the specified car. Only accessible for authenticated administrator.
 
 ### Resource Information
 
-|  |  |
-|--|--|
-| Response formats | JSON |
-| Requires authentication? | Yes |
-| Response codes | 200, 400, 401, 403 |
+<table>
+  <tr><td>Response formats</td><td>JSON</td></tr>
+  <tr><td>Requires authentication?</td><td>Yes</td></tr>
+  <tr><td>Response codes</td><td>200, 400, 401, 403</td></tr>
+</table>
 
 
 ###  Parameters
@@ -959,11 +959,11 @@ Updates a specified car. Only accessible for authenticated administrator.
 
 ### Resource Information
 
-|  |  |
-|--|--|
-| Response formats | JSON |
-| Requires authentication? | Yes |
-| Response codes | 200, 400, 401, 403 |
+<table>
+  <tr><td>Response formats</td><td>JSON</td></tr>
+  <tr><td>Requires authentication?</td><td>Yes</td></tr>
+  <tr><td>Response codes</td><td>200, 400, 401, 403</td></tr>
+</table>
 
 
 ###  Parameters
@@ -1013,11 +1013,11 @@ Deletes a specified car. Only accessible for authenticated administrator.
 
 ### Resource Information
 
-|  |  |
-|--|--|
-| Response formats | JSON |
-| Requires authentication? | Yes |
-| Response codes | 204, 400, 401, 403 |
+<table>
+  <tr><td>Response formats</td><td>JSON</td></tr>
+  <tr><td>Requires authentication?</td><td>Yes</td></tr>
+  <tr><td>Response codes</td><td>204, 400, 401, 403</td></tr>
+</table>
 
 
 ###  Parameters
@@ -1058,11 +1058,11 @@ Registers the user.
 
 ### Resource Information
 
-|  |  |
-|--|--|
-| Response formats | JSON |
-| Requires authentication? | No |
-| Response codes | 201, 400 |
+<table>
+  <tr><td>Response formats</td><td>JSON</td></tr>
+  <tr><td>Requires authentication?</td><td>No</td></tr>
+  <tr><td>Response codes</td><td>201, 400</td></tr>
+</table>
 
 
 ###  Parameters
@@ -1108,11 +1108,11 @@ Logs in the specified user.
 
 ### Resource Information
 
-|  |  |
-|--|--|
-| Response formats | JSON |
-| Requires authentication? | No |
-| Response codes | 201, 400 |
+<table>
+  <tr><td>Response formats</td><td>JSON</td></tr>
+  <tr><td>Requires authentication?</td><td>No</td></tr>
+  <tr><td>Response codes</td><td>201, 400</td></tr>
+</table>
 
 
 ###  Parameters
@@ -1156,11 +1156,11 @@ Logs out the current user.
 
 ### Resource Information
 
-|  |  |
-|--|--|
-| Response formats | JSON |
-| Requires authentication? | Yes |
-| Response codes | 200, 401 |
+<table>
+  <tr><td>Response formats</td><td>JSON</td></tr>
+  <tr><td>Requires authentication?</td><td>Yes</td></tr>
+  <tr><td>Response codes</td><td>200, 401</td></tr>
+</table>
 
 
 ###  Parameters
@@ -1199,11 +1199,11 @@ Returns the current users information.
 
 ### Resource Information
 
-|  |  |
-|--|--|
-| Response formats | JSON |
-| Requires authentication? | Yes |
-| Response codes | 200, 401 |
+<table>
+  <tr><td>Response formats</td><td>JSON</td></tr>
+  <tr><td>Requires authentication?</td><td>Yes</td></tr>
+  <tr><td>Response codes</td><td>200, 401</td></tr>
+</table>
 
 
 ###  Parameters
@@ -1248,11 +1248,11 @@ Returns a list of all users with the current page, total pages and result count.
 
 ### Resource Information
 
-|  |  |
-|--|--|
-| Response formats | JSON |
-| Requires authentication? | Yes |
-| Response codes | 200, 204, 400, 401, 403 |
+<table>
+  <tr><td>Response formats</td><td>JSON</td></tr>
+  <tr><td>Requires authentication?</td><td>Yes</td></tr>
+  <tr><td>Response codes</td><td>200, 204, 400, 401, 403</td></tr>
+</table>
 
 
 ###  Parameters

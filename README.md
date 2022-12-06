@@ -302,7 +302,7 @@ Returns the specified parcel.
 
 ## PUT /parcels/:id
 
-Updates a specified parcel. Only accessible for authenticated administrator.
+Updates a specified parcel. Only accessible for authenticated administrator and courier. Courier can only change the parameter "status".
 
 
 ### Resource URL

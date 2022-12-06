@@ -439,7 +439,7 @@ Returns a list of all couriers with the current page, total pages and result cou
 |Name|Required|Description|Default Value|Example|
 |---|---|---|---|---|
 |page|optional|The page number||1|
-|size|optional|The number of parcels to return per page||10|
+|size|optional|The number of couriers to return per page||10|
 
 
 #### Example Requests
@@ -763,7 +763,7 @@ Returns a list of all cars with the current page, total pages and result count. 
 |Name|Required|Description|Default Value|Example|
 |---|---|---|---|---|
 |page|optional|The page number||1|
-|size|optional|The number of parcels to return per page||10|
+|size|optional|The number of cars to return per page||10|
 
 
 #### Example Requests
@@ -1260,7 +1260,7 @@ Returns a list of all users with the current page, total pages and result count.
 |Name|Required|Description|Default Value|Example|
 |---|---|---|---|---|
 |page|optional|The page number||1|
-|size|optional|The number of parcels to return per page||10|
+|size|optional|The number of users to return per page||10|
 |unassigned|optional|When set to true, will only return users that have not been assigned to a courier||true|
 
 

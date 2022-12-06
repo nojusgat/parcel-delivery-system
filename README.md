@@ -33,7 +33,7 @@ Sistemos sudedamosios dalys:
 
 # Naudotojo sąsajos projektas
 
-Pagrindinis puslapis (Siuntos sekimas)
+## Pagrindinis puslapis (Siuntos sekimas)
 
 | Wireframe |
 | --- |
@@ -43,7 +43,7 @@ Pagrindinis puslapis (Siuntos sekimas)
 | --- |
 | ![](/wireframes/home-real.png) |
 
-Prisijungimas
+## Prisijungimas
 
 | Wireframe |
 | --- |
@@ -53,7 +53,7 @@ Prisijungimas
 | --- |
 | ![](/wireframes/login-real.png) |
 
-Registracija
+## Registracija
 
 | Wireframe |
 | --- |
@@ -63,7 +63,7 @@ Registracija
 | --- |
 | ![](/wireframes/register-real.png) |
 
-Siuntos pristatymo puslapis (Matomas tik kurjeriui)
+## Siuntos pristatymo puslapis (Matomas tik kurjeriui)
 
 | Wireframe |
 | --- |
@@ -73,7 +73,7 @@ Siuntos pristatymo puslapis (Matomas tik kurjeriui)
 | --- |
 | ![](/wireframes/courier-view/deliveries-real.png) |
 
-Siuntos sąrašas (Matomas tik kurjeriui)
+## Siuntos sąrašas (Matomas tik kurjeriui)
 
 | Wireframe |
 | --- |
@@ -83,7 +83,7 @@ Siuntos sąrašas (Matomas tik kurjeriui)
 | --- |
 | ![](/wireframes/courier-view/parcels-real.png) |
 
-Automobilių sąrašas (Matomas tik administratoriui)
+## Automobilių sąrašas (Matomas tik administratoriui)
 
 | Wireframe |
 | --- |
@@ -93,7 +93,7 @@ Automobilių sąrašas (Matomas tik administratoriui)
 | --- |
 | ![](/wireframes/admin-view/cars-real.png) |
 
-Kurjerių sąrašas (Matomas tik administratoriui)
+## Kurjerių sąrašas (Matomas tik administratoriui)
 
 | Wireframe |
 | --- |
@@ -103,7 +103,7 @@ Kurjerių sąrašas (Matomas tik administratoriui)
 | --- |
 | ![](/wireframes/admin-view/couriers-real.png) |
 
-Siuntų sąrašas (Matomas tik administratoriui)
+## Siuntų sąrašas (Matomas tik administratoriui)
 
 | Wireframe |
 | --- |
@@ -1288,4 +1288,5 @@ Returns a list of all users with the current page, total pages and result count.
 ```
 
 
-## Išvados
+# Išvados
+Pavyko realizuoti siuntų pristatymo sistemą bei geriau išmokti front-end, back-end technologijas naudotas šiame darbe, talpinimą į debesį bei sistemos dokumentavimą.

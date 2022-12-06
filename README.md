@@ -31,7 +31,7 @@ Sistemos sudedamosios dalys:
 
 ![](/deployment-diagram.png)
 
-## Naudotojo sąsajos projektas
+# Naudotojo sąsajos projektas
 
 Pagrindinis puslapis (Siuntos sekimas)
 
@@ -113,22 +113,22 @@ Siuntų sąrašas (Matomas tik administratoriui)
 | --- |
 | ![](/wireframes/admin-view/parcels-real.png) |
 
-## API specifikacija
+# API specifikacija
 
 
-### GET /parcels
+## GET /parcels
 
 Returns a list of all parcels with the current page, total pages and result count. Only accessible for authenticated courier and administrator. When accessed by a courier returned list will only have parcels assigned to that courier.
 
 
-#### Resource URL
+### Resource URL
 
 >```
 >https://parcel-delivery-system-ng.herokuapp.com/api/parcels
 >```
 
 
-#### Resource Information
+### Resource Information
 
 |  |  |
 |--|--|
@@ -137,7 +137,7 @@ Returns a list of all parcels with the current page, total pages and result coun
 | Response codes | 200, 204, 400, 401, 403 |
 
 
-####  Parameters
+###  Parameters
 
 |Name|Required|Description|Default Value|Example|
 |---|---|---|---|---|
@@ -146,7 +146,7 @@ Returns a list of all parcels with the current page, total pages and result coun
 |unassigned|optional|When set to true, will only return parcels that have not been assigned to a courier||true|
 
 
-#### Example Requests
+### Example Requests
 
 >```
 >curl --location --request GET --url 'https://parcel-delivery-system-ng.herokuapp.com/api/parcels' \
@@ -154,7 +154,7 @@ Returns a list of all parcels with the current page, total pages and result coun
 >```
 
 
-#### Example Response
+### Example Response
 
 ```json
 {
@@ -170,19 +170,19 @@ Returns a list of all parcels with the current page, total pages and result coun
 ```
 
 
-### POST /parcels
+## POST /parcels
 
 Creates a new parcel. Only accessible for authenticated administrator.
 
 
-#### Resource URL
+### Resource URL
 
 >```
 >https://parcel-delivery-system-ng.herokuapp.com/api/parcels
 >```
 
 
-#### Resource Information
+### Resource Information
 
 |  |  |
 |--|--|
@@ -191,7 +191,7 @@ Creates a new parcel. Only accessible for authenticated administrator.
 | Response codes | 201, 400, 401, 403 |
 
 
-####  Parameters
+###  Parameters
 
 |Name|Required|Description|Default Value|Example|
 |---|---|---|---|---|
@@ -207,7 +207,7 @@ Creates a new parcel. Only accessible for authenticated administrator.
 |courierId|optional|ID of the courier to whom it will be assigned to||10|
 
 
-#### Example Requests
+### Example Requests
 
 >```
 >curl --location --request POST 'https://parcel-delivery-system-ng.herokuapp.com/api/parcels' \
@@ -224,7 +224,7 @@ Creates a new parcel. Only accessible for authenticated administrator.
 >```
 
 
-#### Example Response
+### Example Response
 
 ```json
 {
@@ -244,19 +244,19 @@ Creates a new parcel. Only accessible for authenticated administrator.
 ```
 
 
-### GET /parcels/:id
+## GET /parcels/:id
 
 Returns the specified parcel.
 
 
-#### Resource URL
+### Resource URL
 
 >```
 >https://parcel-delivery-system-ng.herokuapp.com/api/parcels/:id
 >```
 
 
-#### Resource Information
+### Resource Information
 
 |  |  |
 |--|--|
@@ -265,21 +265,21 @@ Returns the specified parcel.
 | Response codes | 200, 400 |
 
 
-####  Parameters
+###  Parameters
 
 |Name|Required|Description|Default Value|Example|
 |---|---|---|---|---|
 |id|required|ID of the parcel||LTEDE6CD6B6B134|
 
 
-#### Example Requests
+### Example Requests
 
 >```
 >curl --location --request GET 'https://parcel-delivery-system-ng.herokuapp.com/api/parcels/LTEDE6CD6B6B134'
 >```
 
 
-#### Example Response
+### Example Response
 
 ```json
 {
@@ -300,19 +300,19 @@ Returns the specified parcel.
 ```
 
 
-### PUT /parcels/:id
+## PUT /parcels/:id
 
 Updates a specified parcel. Only accessible for authenticated administrator.
 
 
-#### Resource URL
+### Resource URL
 
 >```
 >https://parcel-delivery-system-ng.herokuapp.com/api/parcels/:id
 >```
 
 
-#### Resource Information
+### Resource Information
 
 |  |  |
 |--|--|
@@ -321,7 +321,7 @@ Updates a specified parcel. Only accessible for authenticated administrator.
 | Response codes | 200, 400, 401, 403 |
 
 
-####  Parameters
+###  Parameters
 
 |Name|Required|Description|Default Value|Example|
 |---|---|---|---|---|
@@ -338,7 +338,7 @@ Updates a specified parcel. Only accessible for authenticated administrator.
 |courierId|optional|ID of the courier to whom it will be assigned to||10|
 
 
-#### Example Requests
+### Example Requests
 
 >```
 >curl --location --request PUT 'https://parcel-delivery-system-ng.herokuapp.com/api/parcels/LTEDE6CD6B6B134' \
@@ -347,7 +347,7 @@ Updates a specified parcel. Only accessible for authenticated administrator.
 >```
 
 
-#### Example Response
+### Example Response
 
 ```json
 {
@@ -368,19 +368,19 @@ Updates a specified parcel. Only accessible for authenticated administrator.
 ```
 
 
-### DEL /parcels/:id
+## DEL /parcels/:id
 
 Deletes a specified parcel. Only accessible for authenticated administrator.
 
 
-#### Resource URL
+### Resource URL
 
 >```
 >https://parcel-delivery-system-ng.herokuapp.com/api/parcels/:id
 >```
 
 
-#### Resource Information
+### Resource Information
 
 |  |  |
 |--|--|
@@ -389,14 +389,14 @@ Deletes a specified parcel. Only accessible for authenticated administrator.
 | Response codes | 204, 400, 401, 403 |
 
 
-####  Parameters
+###  Parameters
 
 |Name|Required|Description|Default Value|Example|
 |---|---|---|---|---|
 |id|required|ID of the parcel||LTEDE6CD6B6B134|
 
 
-#### Example Requests
+### Example Requests
 
 >```
 >curl --location --request DELETE 'https://parcel-delivery-system-ng.herokuapp.com/api/parcels/LTEDE6CD6B6B134' \
@@ -404,7 +404,7 @@ Deletes a specified parcel. Only accessible for authenticated administrator.
 >```
 
 
-#### Example Response
+### Example Response
 
 ```json
 null
@@ -413,19 +413,19 @@ null
 
 
 
-### GET /couriers
+## GET /couriers
 
 Returns a list of all couriers with the current page, total pages and result count. Only accessible for authenticated administrator.
 
 
-#### Resource URL
+### Resource URL
 
 >```
 >https://parcel-delivery-system-ng.herokuapp.com/api/couriers
 >```
 
 
-#### Resource Information
+### Resource Information
 
 |  |  |
 |--|--|
@@ -434,7 +434,7 @@ Returns a list of all couriers with the current page, total pages and result cou
 | Response codes | 200, 204, 400, 401, 403 |
 
 
-####  Parameters
+###  Parameters
 
 |Name|Required|Description|Default Value|Example|
 |---|---|---|---|---|
@@ -442,7 +442,7 @@ Returns a list of all couriers with the current page, total pages and result cou
 |size|optional|The number of couriers to return per page||10|
 
 
-#### Example Requests
+### Example Requests
 
 >```
 >curl --location --request GET --url 'https://parcel-delivery-system-ng.herokuapp.com/api/couriers' \
@@ -450,7 +450,7 @@ Returns a list of all couriers with the current page, total pages and result cou
 >```
 
 
-#### Example Response
+### Example Response
 
 ```json
 {
@@ -466,19 +466,19 @@ Returns a list of all couriers with the current page, total pages and result cou
 ```
 
 
-### GET /couriers/:id/parcels
+## GET /couriers/:id/parcels
 
 Returns a list of all parcels for a specified courier with the current page, total pages and result count. Only accessible for authenticated administrator.
 
 
-#### Resource URL
+### Resource URL
 
 >```
 >https://parcel-delivery-system-ng.herokuapp.com/api/couriers/:id/parcels
 >```
 
 
-#### Resource Information
+### Resource Information
 
 |  |  |
 |--|--|
@@ -487,7 +487,7 @@ Returns a list of all parcels for a specified courier with the current page, tot
 | Response codes | 200, 400, 401, 403 |
 
 
-####  Parameters
+###  Parameters
 
 |Name|Required|Description|Default Value|Example|
 |---|---|---|---|---|
@@ -496,7 +496,7 @@ Returns a list of all parcels for a specified courier with the current page, tot
 |size|optional|The number of parcels to return per page||10|
 
 
-#### Example Requests
+### Example Requests
 
 >```
 >curl --location --request GET --url 'https://parcel-delivery-system-ng.herokuapp.com/api/couriers/10/parcels' \
@@ -504,7 +504,7 @@ Returns a list of all parcels for a specified courier with the current page, tot
 >```
 
 
-#### Example Response
+### Example Response
 
 ```json
 {
@@ -520,19 +520,19 @@ Returns a list of all parcels for a specified courier with the current page, tot
 ```
 
 
-### POST /couriers
+## POST /couriers
 
 Creates a new courier. Only accessible for authenticated administrator.
 
 
-#### Resource URL
+### Resource URL
 
 >```
 >https://parcel-delivery-system-ng.herokuapp.com/api/couriers
 >```
 
 
-#### Resource Information
+### Resource Information
 
 |  |  |
 |--|--|
@@ -541,7 +541,7 @@ Creates a new courier. Only accessible for authenticated administrator.
 | Response codes | 201, 400, 401, 403 |
 
 
-####  Parameters
+###  Parameters
 
 |Name|Required|Description|Default Value|Example|
 |---|---|---|---|---|
@@ -552,7 +552,7 @@ Creates a new courier. Only accessible for authenticated administrator.
 |userId|optional|ID of the user that will be assigned to the courier||1|
 
 
-#### Example Requests
+### Example Requests
 
 >```
 >curl --location --request POST 'https://parcel-delivery-system-ng.herokuapp.com/api/couriers' \
@@ -563,7 +563,7 @@ Creates a new courier. Only accessible for authenticated administrator.
 >```
 
 
-#### Example Response
+### Example Response
 
 ```json
 {
@@ -578,19 +578,19 @@ Creates a new courier. Only accessible for authenticated administrator.
 ```
 
 
-### GET /couriers/:id
+## GET /couriers/:id
 
 Returns the specified courier. Only accessible for authenticated administrator.
 
 
-#### Resource URL
+### Resource URL
 
 >```
 >https://parcel-delivery-system-ng.herokuapp.com/api/couriers/:id
 >```
 
 
-#### Resource Information
+### Resource Information
 
 |  |  |
 |--|--|
@@ -599,14 +599,14 @@ Returns the specified courier. Only accessible for authenticated administrator.
 | Response codes | 200, 400, 401, 403 |
 
 
-####  Parameters
+###  Parameters
 
 |Name|Required|Description|Default Value|Example|
 |---|---|---|---|---|
 |id|required|ID of the courier||1|
 
 
-#### Example Requests
+### Example Requests
 
 >```
 >curl --location --request GET 'https://parcel-delivery-system-ng.herokuapp.com/api/couriers/1' \
@@ -614,7 +614,7 @@ Returns the specified courier. Only accessible for authenticated administrator.
 >```
 
 
-#### Example Response
+### Example Response
 
 ```json
 {
@@ -631,19 +631,19 @@ Returns the specified courier. Only accessible for authenticated administrator.
 ```
 
 
-### PUT /couriers/:id
+## PUT /couriers/:id
 
 Updates a specified courier. Only accessible for authenticated administrator.
 
 
-#### Resource URL
+### Resource URL
 
 >```
 >https://parcel-delivery-system-ng.herokuapp.com/api/couriers/:id
 >```
 
 
-#### Resource Information
+### Resource Information
 
 |  |  |
 |--|--|
@@ -652,7 +652,7 @@ Updates a specified courier. Only accessible for authenticated administrator.
 | Response codes | 200, 400, 401, 403 |
 
 
-####  Parameters
+###  Parameters
 
 |Name|Required|Description|Default Value|Example|
 |---|---|---|---|---|
@@ -664,7 +664,7 @@ Updates a specified courier. Only accessible for authenticated administrator.
 |userId|optional|ID of the user that will be assigned to the courier||1|
 
 
-#### Example Requests
+### Example Requests
 
 >```
 >curl --location --request PUT 'https://parcel-delivery-system-ng.herokuapp.com/api/couriers/1' \
@@ -675,7 +675,7 @@ Updates a specified courier. Only accessible for authenticated administrator.
 >```
 
 
-#### Example Response
+### Example Response
 
 ```json
 {
@@ -692,19 +692,19 @@ Updates a specified courier. Only accessible for authenticated administrator.
 ```
 
 
-### DEL /couriers/:id
+## DEL /couriers/:id
 
 Deletes a specified courier. Only accessible for authenticated administrator.
 
 
-#### Resource URL
+### Resource URL
 
 >```
 >https://parcel-delivery-system-ng.herokuapp.com/api/couriers/:id
 >```
 
 
-#### Resource Information
+### Resource Information
 
 |  |  |
 |--|--|
@@ -713,14 +713,14 @@ Deletes a specified courier. Only accessible for authenticated administrator.
 | Response codes | 204, 400, 401, 403 |
 
 
-####  Parameters
+###  Parameters
 
 |Name|Required|Description|Default Value|Example|
 |---|---|---|---|---|
 |id|required|ID of the courier||1|
 
 
-#### Example Requests
+### Example Requests
 
 >```
 >curl --location --request DELETE 'https://parcel-delivery-system-ng.herokuapp.com/api/couriers/1' \
@@ -728,7 +728,7 @@ Deletes a specified courier. Only accessible for authenticated administrator.
 >```
 
 
-#### Example Response
+### Example Response
 
 ```json
 null
@@ -737,19 +737,19 @@ null
 
 
 
-### GET /cars
+## GET /cars
 
 Returns a list of all cars with the current page, total pages and result count. Only accessible for authenticated administrator.
 
 
-#### Resource URL
+### Resource URL
 
 >```
 >https://parcel-delivery-system-ng.herokuapp.com/api/cars
 >```
 
 
-#### Resource Information
+### Resource Information
 
 |  |  |
 |--|--|
@@ -758,7 +758,7 @@ Returns a list of all cars with the current page, total pages and result count. 
 | Response codes | 200, 204, 400, 401, 403 |
 
 
-####  Parameters
+###  Parameters
 
 |Name|Required|Description|Default Value|Example|
 |---|---|---|---|---|
@@ -766,7 +766,7 @@ Returns a list of all cars with the current page, total pages and result count. 
 |size|optional|The number of cars to return per page||10|
 
 
-#### Example Requests
+### Example Requests
 
 >```
 >curl --location --request GET --url 'https://parcel-delivery-system-ng.herokuapp.com/api/cars' \
@@ -774,7 +774,7 @@ Returns a list of all cars with the current page, total pages and result count. 
 >```
 
 
-#### Example Response
+### Example Response
 
 ```json
 {
@@ -790,19 +790,19 @@ Returns a list of all cars with the current page, total pages and result count. 
 ```
 
 
-### GET /cars/:id/parcels
+## GET /cars/:id/parcels
 
 Returns a list of all parcels for a specified car with the current page, total pages and result count. Only accessible for authenticated administrator.
 
 
-#### Resource URL
+### Resource URL
 
 >```
 >https://parcel-delivery-system-ng.herokuapp.com/api/cars/:id/parcels
 >```
 
 
-#### Resource Information
+### Resource Information
 
 |  |  |
 |--|--|
@@ -811,7 +811,7 @@ Returns a list of all parcels for a specified car with the current page, total p
 | Response codes | 200, 400, 401, 403 |
 
 
-####  Parameters
+###  Parameters
 
 |Name|Required|Description|Default Value|Example|
 |---|---|---|---|---|
@@ -820,7 +820,7 @@ Returns a list of all parcels for a specified car with the current page, total p
 |size|optional|The number of parcels to return per page||10|
 
 
-#### Example Requests
+### Example Requests
 
 >```
 >curl --location --request GET --url 'https://parcel-delivery-system-ng.herokuapp.com/api/cars/10/parcels' \
@@ -828,7 +828,7 @@ Returns a list of all parcels for a specified car with the current page, total p
 >```
 
 
-#### Example Response
+### Example Response
 
 ```json
 {
@@ -844,19 +844,19 @@ Returns a list of all parcels for a specified car with the current page, total p
 ```
 
 
-### POST /cars
+## POST /cars
 
 Creates a new car. Only accessible for authenticated administrator.
 
 
-#### Resource URL
+### Resource URL
 
 >```
 >https://parcel-delivery-system-ng.herokuapp.com/api/cars
 >```
 
 
-#### Resource Information
+### Resource Information
 
 |  |  |
 |--|--|
@@ -865,7 +865,7 @@ Creates a new car. Only accessible for authenticated administrator.
 | Response codes | 201, 400, 401, 403 |
 
 
-####  Parameters
+###  Parameters
 
 |Name|Required|Description|Default Value|Example|
 |---|---|---|---|---|
@@ -874,7 +874,7 @@ Creates a new car. Only accessible for authenticated administrator.
 |licensePlate|required|The license plate of the car||ABC123|
 
 
-#### Example Requests
+### Example Requests
 
 >```
 >curl --location --request POST 'https://parcel-delivery-system-ng.herokuapp.com/api/cars' \
@@ -885,7 +885,7 @@ Creates a new car. Only accessible for authenticated administrator.
 >```
 
 
-#### Example Response
+### Example Response
 
 ```json
 {
@@ -897,19 +897,19 @@ Creates a new car. Only accessible for authenticated administrator.
 ```
 
 
-### GET /cars/:id
+## GET /cars/:id
 
 Returns the specified car. Only accessible for authenticated administrator.
 
 
-#### Resource URL
+### Resource URL
 
 >```
 >https://parcel-delivery-system-ng.herokuapp.com/api/cars/:id
 >```
 
 
-#### Resource Information
+### Resource Information
 
 |  |  |
 |--|--|
@@ -918,14 +918,14 @@ Returns the specified car. Only accessible for authenticated administrator.
 | Response codes | 200, 400, 401, 403 |
 
 
-####  Parameters
+###  Parameters
 
 |Name|Required|Description|Default Value|Example|
 |---|---|---|---|---|
 |id|required|ID of the car||1|
 
 
-#### Example Requests
+### Example Requests
 
 >```
 >curl --location --request GET 'https://parcel-delivery-system-ng.herokuapp.com/api/cars/1' \
@@ -933,7 +933,7 @@ Returns the specified car. Only accessible for authenticated administrator.
 >```
 
 
-#### Example Response
+### Example Response
 
 ```json
 {
@@ -945,19 +945,19 @@ Returns the specified car. Only accessible for authenticated administrator.
 ```
 
 
-### PUT /cars/:id
+## PUT /cars/:id
 
 Updates a specified car. Only accessible for authenticated administrator.
 
 
-#### Resource URL
+### Resource URL
 
 >```
 >https://parcel-delivery-system-ng.herokuapp.com/api/cars/:id
 >```
 
 
-#### Resource Information
+### Resource Information
 
 |  |  |
 |--|--|
@@ -966,7 +966,7 @@ Updates a specified car. Only accessible for authenticated administrator.
 | Response codes | 200, 400, 401, 403 |
 
 
-####  Parameters
+###  Parameters
 
 |Name|Required|Description|Default Value|Example|
 |---|---|---|---|---|
@@ -976,7 +976,7 @@ Updates a specified car. Only accessible for authenticated administrator.
 |licensePlate|optional|The license plate of the car||ABC123|
 
 
-#### Example Requests
+### Example Requests
 
 >```
 >curl --location --request PUT 'https://parcel-delivery-system-ng.herokuapp.com/api/cars/1' \
@@ -987,7 +987,7 @@ Updates a specified car. Only accessible for authenticated administrator.
 >```
 
 
-#### Example Response
+### Example Response
 
 ```json
 {
@@ -999,19 +999,19 @@ Updates a specified car. Only accessible for authenticated administrator.
 ```
 
 
-### DEL /cars/:id
+## DEL /cars/:id
 
 Deletes a specified car. Only accessible for authenticated administrator.
 
 
-#### Resource URL
+### Resource URL
 
 >```
 >https://parcel-delivery-system-ng.herokuapp.com/api/cars/:id
 >```
 
 
-#### Resource Information
+### Resource Information
 
 |  |  |
 |--|--|
@@ -1020,14 +1020,14 @@ Deletes a specified car. Only accessible for authenticated administrator.
 | Response codes | 204, 400, 401, 403 |
 
 
-####  Parameters
+###  Parameters
 
 |Name|Required|Description|Default Value|Example|
 |---|---|---|---|---|
 |id|required|ID of the car||1|
 
 
-#### Example Requests
+### Example Requests
 
 >```
 >curl --location --request DELETE 'https://parcel-delivery-system-ng.herokuapp.com/api/cars/1' \
@@ -1035,7 +1035,7 @@ Deletes a specified car. Only accessible for authenticated administrator.
 >```
 
 
-#### Example Response
+### Example Response
 
 ```json
 null
@@ -1044,19 +1044,19 @@ null
 
 
 
-### POST /auth/register
+## POST /auth/register
 
 Registers the user.
 
 
-#### Resource URL
+### Resource URL
 
 >```
 >https://parcel-delivery-system-ng.herokuapp.com/api/auth/register
 >```
 
 
-#### Resource Information
+### Resource Information
 
 |  |  |
 |--|--|
@@ -1065,7 +1065,7 @@ Registers the user.
 | Response codes | 201, 400 |
 
 
-####  Parameters
+###  Parameters
 
 |Name|Required|Description|Default Value|Example|
 |---|---|---|---|---|
@@ -1074,7 +1074,7 @@ Registers the user.
 |email|required|Email of the user to register||example@example.com|
 
 
-#### Example Requests
+### Example Requests
 
 >```
 >curl --location --request POST 'https://parcel-delivery-system-ng.herokuapp.com/api/auth/register' \
@@ -1084,7 +1084,7 @@ Registers the user.
 >```
 
 
-#### Example Response
+### Example Response
 
 ```json
 {
@@ -1094,19 +1094,19 @@ Registers the user.
 ```
 
 
-### POST /auth/login
+## POST /auth/login
 
 Logs in the specified user.
 
 
-#### Resource URL
+### Resource URL
 
 >```
 >https://parcel-delivery-system-ng.herokuapp.com/api/auth/login
 >```
 
 
-#### Resource Information
+### Resource Information
 
 |  |  |
 |--|--|
@@ -1115,7 +1115,7 @@ Logs in the specified user.
 | Response codes | 201, 400 |
 
 
-####  Parameters
+###  Parameters
 
 |Name|Required|Description|Default Value|Example|
 |---|---|---|---|---|
@@ -1123,7 +1123,7 @@ Logs in the specified user.
 |password|required|Password of the user to login with||example|
 
 
-#### Example Requests
+### Example Requests
 
 >```
 >curl --location --request POST 'https://parcel-delivery-system-ng.herokuapp.com/api/auth/login' \
@@ -1132,7 +1132,7 @@ Logs in the specified user.
 >```
 
 
-#### Example Response
+### Example Response
 
 ```json
 {
@@ -1142,19 +1142,19 @@ Logs in the specified user.
 ```
 
 
-### GET /auth/logout
+## GET /auth/logout
 
 Logs out the current user.
 
 
-#### Resource URL
+### Resource URL
 
 >```
 >https://parcel-delivery-system-ng.herokuapp.com/api/auth/logout
 >```
 
 
-#### Resource Information
+### Resource Information
 
 |  |  |
 |--|--|
@@ -1163,12 +1163,12 @@ Logs out the current user.
 | Response codes | 200, 401 |
 
 
-####  Parameters
+###  Parameters
 
 None
 
 
-#### Example Requests
+### Example Requests
 
 >```
 >curl --location --request GET 'https://parcel-delivery-system-ng.herokuapp.com/api/auth/logout' \
@@ -1176,7 +1176,7 @@ None
 >```
 
 
-#### Example Response
+### Example Response
 
 ```json
 {
@@ -1185,19 +1185,19 @@ None
 ```
 
 
-### GET /auth/me
+## GET /auth/me
 
 Returns the current users information.
 
 
-#### Resource URL
+### Resource URL
 
 >```
 >https://parcel-delivery-system-ng.herokuapp.com/api/auth/me
 >```
 
 
-#### Resource Information
+### Resource Information
 
 |  |  |
 |--|--|
@@ -1206,12 +1206,12 @@ Returns the current users information.
 | Response codes | 200, 401 |
 
 
-####  Parameters
+###  Parameters
 
 None
 
 
-#### Example Requests
+### Example Requests
 
 >```
 >curl --location --request GET 'https://parcel-delivery-system-ng.herokuapp.com/api/auth/me' \
@@ -1219,7 +1219,7 @@ None
 >```
 
 
-#### Example Response
+### Example Response
 
 ```json
 {
@@ -1234,19 +1234,19 @@ None
 ```
 
 
-### GET /users
+## GET /users
 
 Returns a list of all users with the current page, total pages and result count. Only accessible for authenticated administrator.
 
 
-#### Resource URL
+### Resource URL
 
 >```
 >https://parcel-delivery-system-ng.herokuapp.com/api/users
 >```
 
 
-#### Resource Information
+### Resource Information
 
 |  |  |
 |--|--|
@@ -1255,7 +1255,7 @@ Returns a list of all users with the current page, total pages and result count.
 | Response codes | 200, 204, 400, 401, 403 |
 
 
-####  Parameters
+###  Parameters
 
 |Name|Required|Description|Default Value|Example|
 |---|---|---|---|---|
@@ -1264,7 +1264,7 @@ Returns a list of all users with the current page, total pages and result count.
 |unassigned|optional|When set to true, will only return users that have not been assigned to a courier||true|
 
 
-#### Example Requests
+### Example Requests
 
 >```
 >curl --location --request GET 'https://parcel-delivery-system-ng.herokuapp.com/api/users' \
@@ -1272,7 +1272,7 @@ Returns a list of all users with the current page, total pages and result count.
 >```
 
 
-#### Example Response
+### Example Response
 
 ```json
 {
